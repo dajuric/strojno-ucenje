@@ -1,0 +1,16 @@
+@relation 'data set'
+
+@attribute text string
+@attribute class {'no spam','spam'}
+
+@data
+'hey, buy this from me!',spam
+'do you want to buy?',spam
+'I have a party tonight!','no spam'
+'today it is a nice weather','no spam'
+'you are best',spam
+'I have a horse','no spam'
+'you are my friend','no spam'
+'buy, buy, buy!',spam
+'it is spring in the air','no spam'
+'do you want to come?','no spam'
