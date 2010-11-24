@@ -1,0 +1,12 @@
+Izradeno pretvranje iz datoteka sa recenicama u .arff (Weka) oblik datoteke
+
+Kako gotovo svaka datoteka ima drugacije formatiranje ideja je da se ti svi formati prevedu u .xml oblik, 
+a potom pomocu Arff_Creator kreira arff oblk datoteke
+
+primjeri su u data.
+datoteka "interest.acl94" je pocetna koja je prevorena u xml (rucno uz pomoc Notepad++), a kasnije je generiran
+interest.arff
+
+proba je primjer datoteke
+
+konverter sporo radi i trenutno je osjetljiv na greške (budem ispravio)
