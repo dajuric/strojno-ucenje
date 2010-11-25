@@ -9,7 +9,7 @@ namespace NaiveBayes
     {
         static void Main(string[] args)
         {
-            ArffReader arffReader = new ArffReader("D:/lukStrijelaTrain.arff");
+            ArffReader arffReader = new ArffReader("D:/proba.arff");
             arffReader.Parse();
         }
     }
