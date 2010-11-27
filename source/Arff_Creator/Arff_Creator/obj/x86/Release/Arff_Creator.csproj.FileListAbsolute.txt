@@ -1,0 +1,5 @@
+D:\Users\Administrator\Desktop\interest\Arff_Creator\Arff_Creator\bin\Release\Arff_Creator.exe
+D:\Users\Administrator\Desktop\interest\Arff_Creator\Arff_Creator\bin\Release\Arff_Creator.pdb
+D:\Users\Administrator\Desktop\interest\Arff_Creator\Arff_Creator\obj\x86\Release\ResolveAssemblyReference.cache
+D:\Users\Administrator\Desktop\interest\Arff_Creator\Arff_Creator\obj\x86\Release\Arff_Creator.exe
+D:\Users\Administrator\Desktop\interest\Arff_Creator\Arff_Creator\obj\x86\Release\Arff_Creator.pdb
