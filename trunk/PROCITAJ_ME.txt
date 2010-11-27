@@ -1,0 +1,9 @@
+﻿primjeri uzoraka:
+	-> uzorciZaWSD -> Darko
+	
+	kako su pojedine datoteke različitog formata ideja je bila napraviti jedinstveni (xml) (primjer proba.xml)
+	interest.xml je dobiven iz interest.acI94.txt pomoću notepad++ (ručno)
+	
+	xml format se dalje transformira u .arff format 8Wekin format)
+	
+	također napravljen je Bayesov klasifikator
