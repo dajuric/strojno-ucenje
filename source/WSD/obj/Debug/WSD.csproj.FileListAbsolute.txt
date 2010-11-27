@@ -1,5 +1,0 @@
-D:\Users\Administrator\Desktop\StrojnoProject\WSD\obj\Debug\ResolveAssemblyReference.cache
-D:\Users\Administrator\Desktop\StrojnoProject\WSD\bin\Debug\WSD.dll
-D:\Users\Administrator\Desktop\StrojnoProject\WSD\bin\Debug\WSD.pdb
-D:\Users\Administrator\Desktop\StrojnoProject\WSD\obj\Debug\WSD.dll
-D:\Users\Administrator\Desktop\StrojnoProject\WSD\obj\Debug\WSD.pdb
