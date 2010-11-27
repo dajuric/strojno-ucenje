@@ -77,7 +77,7 @@ namespace NaiveBayes
                 {
                     decisionAttribCount++;
 
-                    if (learnSet.DataRows[dataLine][attribCol] == "da")
+                    if (learnSet.DataRows[dataLine][attribCol] == "T")
                     {
                         conditionalProbability++;
                     }
