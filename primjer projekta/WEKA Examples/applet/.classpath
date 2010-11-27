@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry excluding="weka-src/src/main/|weka-src/src/test/java/|weka-src/src/main/java/" kind="src" path=""/>
-	<classpathentry excluding="java/" kind="src" path="weka-src/src/main"/>
-	<classpathentry kind="src" path="weka-src/src/main/java"/>
-	<classpathentry kind="src" path="weka-src/src/test/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="weka-src/bin"/>
-</classpath>
