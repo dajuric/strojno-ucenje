@@ -1,5 +1,0 @@
-D:\Users\Administrator\Desktop\interest\NaiveBayes\NaiveBayes\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\Users\Administrator\Desktop\interest\NaiveBayes\NaiveBayes\bin\Debug\NaiveBayes.exe
-D:\Users\Administrator\Desktop\interest\NaiveBayes\NaiveBayes\bin\Debug\NaiveBayes.pdb
-D:\Users\Administrator\Desktop\interest\NaiveBayes\NaiveBayes\obj\x86\Debug\NaiveBayes.exe
-D:\Users\Administrator\Desktop\interest\NaiveBayes\NaiveBayes\obj\x86\Debug\NaiveBayes.pdb
