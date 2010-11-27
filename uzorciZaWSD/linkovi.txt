@@ -1,3 +1,0 @@
-SENSEVAL-1 i SENSEVAL-2 data:
-
-http://193.133.140.102/senseval2/Results/guidelines.htm#rawdata
