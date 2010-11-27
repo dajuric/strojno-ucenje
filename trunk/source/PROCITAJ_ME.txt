@@ -8,5 +8,3 @@ datoteka "interest.acl94" je pocetna koja je prevorena u xml (rucno uz pomoc Not
 interest.arff
 
 proba je primjer datoteke
-
-konverter sporo radi i trenutno je osjetljiv na greške (budem ispravio)
