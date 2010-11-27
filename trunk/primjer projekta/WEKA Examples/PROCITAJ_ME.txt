@@ -1,7 +1,0 @@
-direktorij applet --> weka-src
-     staviti raspakirane datoteke iz weka-src.jar (nalazi se u direktoriju gdje je weka)
-	 otvoriš sa alatom koji podržava .zip
-
-ucitaj project u Eclipse
-TextClassifier pokreni kao Java app
-za applet ne radi (ne znam zašto)
