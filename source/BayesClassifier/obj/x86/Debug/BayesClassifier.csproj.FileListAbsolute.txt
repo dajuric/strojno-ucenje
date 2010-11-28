@@ -1,7 +1,0 @@
-D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\obj\x86\Debug\ResolveAssemblyReference.cache
-D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\bin\Debug\BayesClassifier.exe
-D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\bin\Debug\BayesClassifier.pdb
-D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\bin\Debug\WSD.dll
-D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\bin\Debug\WSD.pdb
-D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\obj\x86\Debug\BayesClassifier.exe
-D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\obj\x86\Debug\BayesClassifier.pdb
