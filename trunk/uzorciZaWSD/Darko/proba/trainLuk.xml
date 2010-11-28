@@ -1,0 +1,35 @@
+﻿<body>
+	<comment>
+		 Recenice za ISPROBAVANJE razlikovanja rijeci "luk".
+		 Svi glagoli su u infinitivu i imenice u jednini-nominativ.
+	</comment>
+	
+	<dictionary>
+		<tag key="povrce"> Vrsta povrća. </tag>
+		<tag key="oruzje"> Dio oružja. </tag>
+	</dictionary>
+	
+	<sentence>
+		U lonac treba prvo staviti <tag key="povrce"/> i zatim lagano poprziti.
+	</sentence>
+	
+	<sentence>
+		Guliti <tag key="povrce"/> nije tesko.
+	</sentence>
+	
+	<sentence>
+		Volim spinat sa <tag key="povrce"/>.
+	</sentence>
+	
+	<sentence>
+		Znati li da su Indijanac koristiti <tag key="oruzje"/> i strijela ?
+	</sentence>
+	
+	<sentence>
+		<tag key="oruzje"/> je sastavni dio oruzje.
+	</sentence>
+	
+	<sentence>
+		Prvo oruzje kod Indijanac bio je <tag key="oruzje"/> i strijela.
+	</sentence>
+</body>
