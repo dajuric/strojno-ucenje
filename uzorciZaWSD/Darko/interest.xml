@@ -4,6 +4,8 @@
 		Ovaj dio se zanemaruje...
 	</comment>
 	
+	<tagReplacement> interest </tagReplacement>
+	
 	<dictionary>
 		<definition key="interest_1"> readiness to give attention </definition>
 		<definition key="interest_2"> quality of causing attention to be given to </definition>

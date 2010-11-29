@@ -4,6 +4,8 @@
 		 Svi glagoli su u infinitivu i imenice u jednini-nominativ.
 	</comment>
 	
+	<tagReplacement> luk </tagReplacement>
+	
 	<dictionary>
 		<tag key="povrce"> Vrsta povrća. </tag>
 		<tag key="oruzje"> Dio oružja. </tag>
