@@ -1,0 +1,7 @@
+D:\Users\Administrator\Desktop\StrojnoProject\XmlToArffConverter\bin\Debug\XmlToArffConverter.exe
+D:\Users\Administrator\Desktop\StrojnoProject\XmlToArffConverter\bin\Debug\XmlToArffConverter.pdb
+D:\Users\Administrator\Desktop\StrojnoProject\XmlToArffConverter\bin\Debug\WSD.dll
+D:\Users\Administrator\Desktop\StrojnoProject\XmlToArffConverter\bin\Debug\WSD.pdb
+D:\Users\Administrator\Desktop\StrojnoProject\XmlToArffConverter\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Users\Administrator\Desktop\StrojnoProject\XmlToArffConverter\obj\x86\Debug\XmlToArffConverter.exe
+D:\Users\Administrator\Desktop\StrojnoProject\XmlToArffConverter\obj\x86\Debug\XmlToArffConverter.pdb
