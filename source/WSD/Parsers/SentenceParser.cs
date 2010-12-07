@@ -15,6 +15,14 @@ namespace WSD.Parsers
             public string AmbigousWordKey;
             public string RawSentence;
 
+            internal Sentence(List<string> leftWords, List<string> rightWords, string ambigousWord, string rawSenetnce)
+            {
+                LeftWords = leftWords;
+                RightWords = rightWords;
+                AmbigousWordKey = ambigousWord;
+                RawSentence = rawSenetnce;
+            }
+
             public Sentence()
             {
                 LeftWords = new List<string>();
@@ -35,16 +43,17 @@ namespace WSD.Parsers
             }
         }
 
-        public SentenceParser(XmlParser xmlParser, int leftWindowSize, int rightWindowSize)
-        {
-            this.LeftWindowSize = leftWindowSize;
-            this.RightWindowSize = rightWindowSize;
+        private List<Sentence> wholeSentences;
 
+        public SentenceParser(XmlParser xmlParser)
+        {
             if (!xmlParser.IsInitialized)
                 xmlParser.Parse();
 
             this.Parser = xmlParser;
+
             this.IsInitialized = false;
+            this.Initialize();
         }
 
         public bool IsInitialized
@@ -53,34 +62,26 @@ namespace WSD.Parsers
             private set;
         }
 
-        public List<Sentence> Sentences
-        {
-            get;
-            private set;
-        }
-
-        public void Parse()
+        private void Initialize()
         {
             XmlNodeList lstSentenceNodes = this.Parser.SentenceNodes;
-            
-            List<SentenceParser.Sentence> lstSentences = new List<SentenceParser.Sentence>();
+
+            List<Sentence> lstSentences = new List<Sentence>();
 
             foreach (XmlNode sentenceNode in lstSentenceNodes)
             {
-                Sentence sentence = this.Parse(sentenceNode, this.Parser.TagReplacement);
+                Sentence sentence = this.ParseSentence(sentenceNode, this.Parser.TagReplacement);
                 lstSentences.Add(sentence);
             }
 
-            this.Sentences = lstSentences;
+            this.wholeSentences = lstSentences;
             this.IsInitialized = true;
         }
 
-
         StringBuilder rawSenetence = new StringBuilder(); //ne koristim string jer je ovo brže
-        private Sentence Parse(XmlNode sentenceNode, string tagReplacement)
+        private Sentence ParseSentence(XmlNode sentenceNode, string tagReplacement)
         {
             Sentence sentence = new Sentence();
-            int preferedNumOfWords = this.LeftWindowSize;
             bool isLeftWindow = true;
 
             rawSenetence.Length = 0;
@@ -93,12 +94,11 @@ namespace WSD.Parsers
                         rawSenetence.Append(tagReplacement);
                         sentence.AmbigousWordKey = childNode.Attributes[XmlParser.XmlTag.WORD_TAG_KEY].Value;                     
 
-                        preferedNumOfWords = this.RightWindowSize;
                         isLeftWindow = false;
                         break;
                     case XmlNodeType.Text: //tekst rečenice
                         rawSenetence.Append(childNode.InnerText);
-                        List<string> words = GetWords(childNode.InnerText, preferedNumOfWords, isLeftWindow);
+                        List<string> words = GetWords(childNode.InnerText, isLeftWindow);
 
                         if (isLeftWindow)
                             sentence.LeftWords = words;
@@ -115,13 +115,12 @@ namespace WSD.Parsers
         }
 
         Regex regWords = new Regex(@"[\w]+", RegexOptions.Compiled); //želim samo riječi...
-        private List<string> GetWords(string partOfSentnce, int preferedNumOfWords, bool isLeftWindow)
+        private List<string> GetWords(string partOfSentnce, bool isLeftWindow)
         {
             List<string> lstWords = new List<string>();
 
             MatchCollection matches = regWords.Matches(partOfSentnce);
-
-            int maxLength = (matches.Count < preferedNumOfWords) ? matches.Count : preferedNumOfWords;
+            int maxLength = matches.Count;
 
             //vrati riječi poslagane prema prostornoj bliskosti višeznačnoj riječi
             if (isLeftWindow)
@@ -136,6 +135,29 @@ namespace WSD.Parsers
             }
 
             return lstWords;
+        }
+
+        public void Parse(int leftWindowSize, int rightWindowSize)
+        {
+            List<Sentence> lstSentences = new List<Sentence>();
+
+            foreach (Sentence wholeSentence in this.wholeSentences)
+            {
+                int maxLeftLength = (leftWindowSize < wholeSentence.LeftWords.Count) ? leftWindowSize : wholeSentence.LeftWords.Count;
+                int maxRightLength = (rightWindowSize < wholeSentence.RightWords.Count) ? rightWindowSize : wholeSentence.RightWords.Count;
+
+                Sentence sentence = new Sentence(wholeSentence.LeftWords.GetRange(0, maxLeftLength), wholeSentence.RightWords.GetRange(0, maxRightLength), 
+                                                 wholeSentence.AmbigousWordKey, wholeSentence.RawSentence);
+                lstSentences.Add(sentence);
+            }
+
+            this.Sentences = lstSentences;
+        }
+
+        public List<Sentence> Sentences
+        {
+            get;
+            private set;
         }
 
         public int LeftWindowSize

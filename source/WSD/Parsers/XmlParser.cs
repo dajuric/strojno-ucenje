@@ -70,7 +70,7 @@ namespace WSD.Parsers
 
             //zamjena za tag (obično je to naziv višeznačne riječi)
             XmlNode tagReplacement = xmlDoc.GetElementsByTagName(XmlTag.TAG_REPLACEMENT)[0];
-            this.TagReplacement = ParseTargReplacement(tagReplacement);
+            this.TagReplacement = ParseTagReplacement(tagReplacement);
 
             //rječnik
             XmlNode dictionary = xmlDoc.GetElementsByTagName(XmlTag.DICTIONARY)[0];
@@ -78,8 +78,11 @@ namespace WSD.Parsers
 
             //rečenice
             this.SentenceNodes = xmlDoc.GetElementsByTagName(XmlTag.SENTENCE);
-
+            
             this.IsInitialized = true;
+
+            //isInitialized ne smije biti poslije ovoga jer konstruktor provjerava IsInitialized (stalna kreacija objekata)
+            this.SentenceParser = new SentenceParser(this);
         }
 
         private string ParseComment(XmlNode comment)
@@ -87,7 +90,7 @@ namespace WSD.Parsers
             return comment.InnerText.Trim();
         }
 
-        private string ParseTargReplacement(XmlNode tagReplacement)
+        private string ParseTagReplacement(XmlNode tagReplacement)
         {
             return tagReplacement.InnerText.Trim();
         }
@@ -122,7 +125,14 @@ namespace WSD.Parsers
             private set;
         }
 
-        public XmlNodeList SentenceNodes
+        //treba za sentenceParser
+        internal XmlNodeList SentenceNodes
+        {
+            get;
+            private set;
+        }
+
+        public SentenceParser SentenceParser
         {
             get;
             private set;

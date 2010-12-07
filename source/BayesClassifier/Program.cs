@@ -10,10 +10,14 @@ namespace BayesClassifier
     {
         static void Main(string[] args)
         {
-            string learnSet = "D:/learnLuk";
-            string trainSet = "D:/trainLuk";
+            //string learnSet = "D:/learnLuk";
+            //string trainSet = "D:/trainLuk";
 
             //SimpleClassifier.Run(learnSet, trainSet);
+
+            string learnSet = "D:/interest";
+            string trainSet = "D:/interest";
+
             Ensemble.Run(learnSet + ".xml", trainSet + ".xml");
         }
     }

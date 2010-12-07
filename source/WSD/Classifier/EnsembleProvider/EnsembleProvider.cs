@@ -125,12 +125,14 @@ namespace WSD.Classifier
                     GetData(leftWindow, rightWindow, OutputPath, out featureLearn, out featureTrain);
 
                     Classifier classifier = new NaiveBayes(featureLearn, featureTrain);
-                    classifier.Classify(); 
+                    classifier.Classify();
                     //this[leftWindow, rightWindow] = classifier;
                     WSD.Classifier.Statistics.Statistics s = new WSD.Classifier.Statistics.Statistics(classifier);
 
                     Console.WriteLine("P" + "(" + leftWindow + ", " + rightWindow + ")= "
                                         + Math.Round(s.GetCoretness(), 2).ToString("N2"));
+
+                    //Console.WriteLine("P" + "(" + leftWindow + ", " + rightWindow + ")");
                 }
             }
 
@@ -160,27 +162,26 @@ namespace WSD.Classifier
 
             string fileNameTrain = new FileInfo(xmlReaderTrain.XmlFile).Name.Split('.')[0];
             fileNameTrain= Path.Combine(outputArffPath, "Train_" + fileNameTrain + "_" + leftWindow.ToString() + "x" + rightWindow.ToString() + ".arff");
-                                  
-            SentenceParser sentenceParserLearn = new SentenceParser(xmlReaderLearn, leftWindow, rightWindow);
-            ArffWriter arffWriterLearn = new ArffWriter(xmlReaderLearn, sentenceParserLearn, fileNameLearn);
+
+            ArffWriter arffWriterLearn = new ArffWriter(xmlReaderLearn, fileNameLearn, leftWindow, rightWindow);
 
             arffWriterLearn.Write(); arffWriterLearn.Dispose();
 
-            SentenceParser sentenceParserTrain = new SentenceParser(xmlReaderTrain, leftWindow, rightWindow);
-            ArffWriter arffWriterTrain = new ArffWriter(xmlReaderTrain, sentenceParserTrain, fileNameTrain);
+            ArffWriter arffWriterTrain = new ArffWriter(xmlReaderTrain, fileNameTrain, leftWindow, rightWindow);
 
             arffWriterTrain.OverrideAttributes(arffWriterLearn);
             arffWriterTrain.Write(); arffWriterTrain.Dispose();
 
-
             ArffReader arffReaderLearn = new ArffReader(fileNameLearn);
             ArffReader arffReaderTrain = new ArffReader(fileNameTrain);
 
-            arffReaderLearn.Parse(); 
+            arffReaderLearn.Parse();
             arffReaderTrain.Parse();
 
             featureLearn = new ArffFeatureProvider(arffReaderLearn);
             featureTrain = new ArffFeatureProvider(arffReaderTrain);
+
+            //featureLearn = featureTrain = null;
         }
 
     }

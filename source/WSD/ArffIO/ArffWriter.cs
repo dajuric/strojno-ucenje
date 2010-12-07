@@ -16,18 +16,17 @@ namespace WSD.ArffIO
         TextWriter txtWriter;
 
         Dictionary<string, int> dicAttributes; //ime atributa i njegova kolumna
-        
-        public ArffWriter(XmlParser xmlReader, SentenceParser sentenceParser, string arffOutputFile)
+
+        public ArffWriter(XmlParser xmlReader, string arffOutputFile, int leftWindowSize, int rightWindowSize)
         {            
             if (!xmlReader.IsInitialized)
                 xmlReader.Parse();
 
-            if (!sentenceParser.IsInitialized)
-                sentenceParser.Parse();
-
             this.xmlReader = xmlReader;
-            this.sentenceParser = sentenceParser;
+            this.sentenceParser = xmlReader.SentenceParser;
 
+            sentenceParser.Parse(leftWindowSize, rightWindowSize);
+      
             txtWriter = new StreamWriter(arffOutputFile, false, Encoding.ASCII); 
             this.ArffFile = arffOutputFile;
 

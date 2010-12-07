@@ -17,27 +17,24 @@ namespace XmlToArffConverter
             Console.WriteLine("Learn set ...\n");
             
             XmlParser xmlReaderLearn = new XmlParser(learnSet + ".xml");
-            SentenceParser sentenceParserLearn = new SentenceParser(xmlReaderLearn, windowsSize, windowsSize);
             
             Console.WriteLine("Reading XML ...");
             xmlReaderLearn.Parse();
 
-            ArffWriter arffWriterLearn = new ArffWriter(xmlReaderLearn, sentenceParserLearn, learnSet + ".arff"); 
+            ArffWriter arffWriterLearn = new ArffWriter(xmlReaderLearn, learnSet + ".arff", windowsSize, windowsSize); 
             
             Console.WriteLine("Writing Arff...");
             arffWriterLearn.Write();
 
 
-
             Console.WriteLine("\n\n\nTrain set ...\n");
 
             XmlParser xmlReaderTrain = new XmlParser(trainSet + ".xml");
-            SentenceParser sentenceParserTrain = new SentenceParser(xmlReaderTrain, windowsSize, windowsSize);
             
             Console.WriteLine("Reading XML ...");
             xmlReaderTrain.Parse();
 
-            ArffWriter arffWriterTrain = new ArffWriter(xmlReaderTrain,sentenceParserTrain ,trainSet + ".arff");
+            ArffWriter arffWriterTrain = new ArffWriter(xmlReaderTrain,trainSet + ".arff", windowsSize, windowsSize);
             
             Console.WriteLine("Synchronizing attributes with learning set...");
             arffWriterTrain.OverrideAttributes(arffWriterLearn);

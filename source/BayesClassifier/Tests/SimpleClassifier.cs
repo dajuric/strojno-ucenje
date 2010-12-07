@@ -28,8 +28,6 @@ namespace BayesClassifier
 
             //samo za dekoraciju :)
             XmlParser xmlReaderTrain = new XmlParser(trainSet + ".xml");
-            SentenceParser sentenceParserTrain = new SentenceParser(xmlReaderTrain, 0, 0);
-            sentenceParserTrain.Parse();
 
             IFeatureProvider learnFeatureProvider = new ArffFeatureProvider(arffReaderLearn);
             IFeatureProvider trainFeatureProvider = new ArffFeatureProvider(arffReaderTrain);
@@ -41,7 +39,7 @@ namespace BayesClassifier
             int idxSentence = 0;
             foreach (Classifier.ClassiferResult result in results)
             {
-                Console.WriteLine(sentenceParserTrain.Sentences[idxSentence].RawSentence + " (" + xmlReaderTrain.Dictionary.Definitions[sentenceParserTrain.Sentences[idxSentence].AmbigousWordKey] + ")");
+                Console.WriteLine(xmlReaderTrain.SentenceParser.Sentences[idxSentence].RawSentence + " (" + xmlReaderTrain.Dictionary.Definitions[xmlReaderTrain.SentenceParser.Sentences[idxSentence].AmbigousWordKey] + ")");
                 Console.WriteLine(result.ToString());
                 Console.WriteLine();
                 idxSentence++;
