@@ -11,6 +11,7 @@ namespace Konverter
         public static List<int> velicineTesta;
         public static List<String> klase;
         public static List<List<String>> recenice;
+        public static String tagReplacement;
 
         public static int pronadjiKlasu(String naziv)
         {
@@ -44,8 +45,18 @@ namespace Konverter
             stareOznake.Add("''");
             stareOznake.Add("``");
             stareOznake.Add("--");
+            stareOznake.Add("&");
+            stareOznake.Add("definition");
+            stareOznake.Add("\"");
+            stareOznake.Add("<compound>");
+            stareOznake.Add("</compound>");
 
             List<String> noveOznake = new List<string>();
+            noveOznake.Add("");
+            noveOznake.Add("");
+            noveOznake.Add("");
+            noveOznake.Add("");
+            noveOznake.Add("");
             noveOznake.Add("");
             noveOznake.Add("");
             noveOznake.Add("");
@@ -142,9 +153,33 @@ namespace Konverter
             Console.WriteLine(izlazPut + "/" + "Test" + ".xml");
             TextWriter twt = new StreamWriter(izlazPut + "/" + "Test" + ".xml");
             twt.WriteLine("<body>");
+            twt.WriteLine("<comment></comment>");
+            twt.WriteLine("<tagReplacement>");
+            twt.WriteLine(tagReplacement);
+            twt.WriteLine("</tagReplacement>");
+            twt.WriteLine("<dictionary>");
+            for (int i = 0; i < klase.Count; i++)
+            {
+                twt.Write("<definition key=\"");
+                twt.Write(klase[i]);
+                twt.WriteLine("\"></definition>");
+            }
+            twt.WriteLine("</dictionary>");
 
             TextWriter twl = new StreamWriter(izlazPut + "/" + "Learn" + ".xml");
             twl.WriteLine("<body>");
+            twl.WriteLine("<comment></comment>");
+            twl.WriteLine("<tagReplacement>");
+            twl.WriteLine(tagReplacement);
+            twl.WriteLine("</tagReplacement>");
+            twl.WriteLine("<dictionary>");
+            for (int i = 0; i < klase.Count; i++)
+            {
+                twl.Write("<definition key=\"");
+                twl.Write(klase[i]);
+                twl.WriteLine("\"></definition>");
+            }
+            twl.WriteLine("</dictionary>");
 
             for (int i = 0; i < recenice.Count; i++)
             {
@@ -172,8 +207,10 @@ namespace Konverter
             String ulazPut = Console.ReadLine();
             Console.WriteLine("Unesi put do izlazne mape: ");
             String izlazPut = Console.ReadLine();
-            ulazPut = "D:/uzorci/hard/hard.cor";
-            izlazPut = "D:/uzorci/hard";
+            ulazPut = "D:/uzorci/serve/serve.cor";
+            izlazPut = "D:/uzorci/serve";
+            Console.WriteLine("Unesi tag replacement: ");
+            tagReplacement = Console.ReadLine();
 
             TextReader tr = new StreamReader(ulazPut);
             
