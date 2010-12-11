@@ -1,0 +1,5 @@
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\bin\Debug\Konverter.exe
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\bin\Debug\Konverter.pdb
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\obj\Debug\Konverter.exe
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\obj\Debug\Konverter.pdb
