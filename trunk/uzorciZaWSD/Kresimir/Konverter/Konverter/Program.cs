@@ -139,27 +139,29 @@ namespace Konverter
 
         public static void ispisiUDatoteke(String izlazPut)
         {
+            Console.WriteLine(izlazPut + "/" + "Test" + ".xml");
+            TextWriter twt = new StreamWriter(izlazPut + "/" + "Test" + ".xml");
+            twt.WriteLine("<body>");
+
+            TextWriter twl = new StreamWriter(izlazPut + "/" + "Learn" + ".xml");
+            twl.WriteLine("<body>");
+
             for (int i = 0; i < recenice.Count; i++)
             {
-                Console.WriteLine(izlazPut + "/" + klase[i] + "Test" + i.ToString() + ".xml");
-                TextWriter twt = new StreamWriter(izlazPut + "/" + klase[i] + "Test" + i.ToString() + ".xml");
-                twt.WriteLine("<body>");
                 for (int j = 0; j < velicineTesta[i]; j++)
                 {
                     twt.WriteLine(recenice[i][j]);
                 }
-                twt.WriteLine("</body>");
-                twt.Close();
-
-                TextWriter twl = new StreamWriter(izlazPut + "/" + klase[i] + "Learn" + i.ToString() + ".xml");
-                twl.WriteLine("<body>");
                 for (int j = velicineTesta[i]; j < recenice[i].Count; j++)
                 {
                     twl.WriteLine(recenice[i][j]);
                 }
-                twl.WriteLine("</body>");
-                twl.Close();
             }
+            twt.WriteLine("</body>");
+            twt.Close();
+
+            twl.WriteLine("</body>");
+            twl.Close();
         }
 
         static void Main(string[] args)
@@ -170,8 +172,8 @@ namespace Konverter
             String ulazPut = Console.ReadLine();
             Console.WriteLine("Unesi put do izlazne mape: ");
             String izlazPut = Console.ReadLine();
-            ulazPut = "D:/uzorci/serve/serve.cor";
-            izlazPut = "D:/uzorci/serve";
+            ulazPut = "D:/uzorci/hard/hard.cor";
+            izlazPut = "D:/uzorci/hard";
 
             TextReader tr = new StreamReader(ulazPut);
             
