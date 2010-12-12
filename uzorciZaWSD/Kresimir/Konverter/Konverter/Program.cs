@@ -12,6 +12,8 @@ namespace Konverter
         public static List<String> klase;
         public static List<List<String>> recenice;
         public static String tagReplacement;
+        public static List<String> learn;
+        public static List<String> test;
 
         public static int pronadjiKlasu(String naziv)
         {
@@ -148,9 +150,27 @@ namespace Konverter
             
         }
 
-        public static void ispisiUDatoteke(String izlazPut)
+        public static List<String> randomiziraj(List<String> stara, int seed)
         {
-            Console.WriteLine(izlazPut + "/" + "Test" + ".xml");
+            List<String> nova = new List<String>();
+
+            Random r = new Random(seed);
+            int randomIndex = 0;
+            while (stara.Count > 0)
+            {
+                randomIndex = r.Next(0, stara.Count);
+                nova.Add(stara[randomIndex]);
+                stara.RemoveAt(randomIndex);
+            }
+
+            return nova;
+        }
+
+        public static void ispisiUDatoteku(String izlazPut, int seed)
+        {
+            test = randomiziraj(test, seed);
+            learn = randomiziraj(learn, seed);
+
             TextWriter twt = new StreamWriter(izlazPut + "/" + "Test" + ".xml");
             twt.WriteLine("<body>");
             twt.WriteLine("<comment></comment>");
@@ -160,11 +180,15 @@ namespace Konverter
             twt.WriteLine("<dictionary>");
             for (int i = 0; i < klase.Count; i++)
             {
-                twt.Write("<definition key=\"");
-                twt.Write(klase[i]);
-                twt.WriteLine("\"></definition>");
+                twt.WriteLine("<definition key=\"" + klase[i] + "\"></definition>");
             }
             twt.WriteLine("</dictionary>");
+            foreach (String s in test)
+            {
+                twt.WriteLine(s);
+            }
+            twt.WriteLine("</body>");
+            twt.Close();
 
             TextWriter twl = new StreamWriter(izlazPut + "/" + "Learn" + ".xml");
             twl.WriteLine("<body>");
@@ -175,28 +199,31 @@ namespace Konverter
             twl.WriteLine("<dictionary>");
             for (int i = 0; i < klase.Count; i++)
             {
-                twl.Write("<definition key=\"");
-                twl.Write(klase[i]);
-                twl.WriteLine("\"></definition>");
+                twl.WriteLine("<definition key=\"" + klase[i] + "\"></definition>");
             }
             twl.WriteLine("</dictionary>");
-
+            foreach (String s in learn)
+            {
+                twl.WriteLine(s);
+            }
+            twl.WriteLine("</body>");
+            twl.Close();
+        }
+        public static void podijeliSkupove()
+        {
+            test = new List<string>();
+            learn = new List<string>();
             for (int i = 0; i < recenice.Count; i++)
             {
                 for (int j = 0; j < velicineTesta[i]; j++)
                 {
-                    twt.WriteLine(recenice[i][j]);
+                    test.Add(recenice[i][j]);
                 }
                 for (int j = velicineTesta[i]; j < recenice[i].Count; j++)
                 {
-                    twl.WriteLine(recenice[i][j]);
+                    learn.Add(recenice[i][j]);
                 }
             }
-            twt.WriteLine("</body>");
-            twt.Close();
-
-            twl.WriteLine("</body>");
-            twl.Close();
         }
 
         static void Main(string[] args)
@@ -207,8 +234,8 @@ namespace Konverter
             String ulazPut = Console.ReadLine();
             Console.WriteLine("Unesi put do izlazne mape: ");
             String izlazPut = Console.ReadLine();
-            ulazPut = "D:/uzorci/serve/serve.cor";
-            izlazPut = "D:/uzorci/serve";
+            ulazPut = "D:/uzorci/line/line.cor";
+            izlazPut = "D:/uzorci/line";
             Console.WriteLine("Unesi tag replacement: ");
             tagReplacement = Console.ReadLine();
 
@@ -228,7 +255,11 @@ namespace Konverter
                 velicineTesta.Add(n);
             }
 
-            ispisiUDatoteke(izlazPut);
+            Console.WriteLine("Unesite seed za random: ");
+            int seed = Int32.Parse(Console.ReadLine());
+
+            podijeliSkupove();
+            ispisiUDatoteku(izlazPut, seed);
 
             tr.Close();            
         }
