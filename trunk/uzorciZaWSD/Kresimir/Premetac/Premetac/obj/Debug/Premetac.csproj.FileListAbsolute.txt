@@ -1,0 +1,5 @@
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\bin\Debug\Premetac.exe
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\bin\Debug\Premetac.pdb
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\obj\Debug\Premetac.exe
+C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\obj\Debug\Premetac.pdb
