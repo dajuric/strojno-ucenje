@@ -86,7 +86,9 @@ namespace WSD.Classifier
                 //if (dict[key][attribColumn] == 0)
                 //    dict[key][attribColumn] = 1;
 
-                dict[key][attribColumn] = (dict[key][attribColumn] + 1) / (this.cachedClassAttribNum[key] + 2);
+                double apriori = CalculatePrbability(key);
+
+                dict[key][attribColumn] = (dict[key][attribColumn] + 1*apriori) / (this.cachedClassAttribNum[key] + 2*apriori);
             }  
         }
      
