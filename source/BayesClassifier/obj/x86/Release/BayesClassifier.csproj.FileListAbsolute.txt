@@ -1,0 +1,7 @@
+D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\bin\Release\BayesClassifier.exe
+D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\bin\Release\BayesClassifier.pdb
+D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\bin\Release\WSD.dll
+D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\bin\Release\WSD.pdb
+D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\obj\x86\Release\ResolveAssemblyReference.cache
+D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\obj\x86\Release\BayesClassifier.exe
+D:\Users\Administrator\Desktop\StrojnoProject\BayesClassifier\obj\x86\Release\BayesClassifier.pdb

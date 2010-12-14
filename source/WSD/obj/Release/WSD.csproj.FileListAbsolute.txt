@@ -1,0 +1,5 @@
+D:\Users\Administrator\Desktop\StrojnoProject\WSD\bin\Release\WSD.dll
+D:\Users\Administrator\Desktop\StrojnoProject\WSD\bin\Release\WSD.pdb
+D:\Users\Administrator\Desktop\StrojnoProject\WSD\obj\Release\ResolveAssemblyReference.cache
+D:\Users\Administrator\Desktop\StrojnoProject\WSD\obj\Release\WSD.dll
+D:\Users\Administrator\Desktop\StrojnoProject\WSD\obj\Release\WSD.pdb
