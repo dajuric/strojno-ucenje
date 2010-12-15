@@ -9,9 +9,9 @@ namespace Premetac
 {
     class Program
     {
-        public static String ulaznaDatoteka = "D:/Test.xml";
-        public static String izlaznaDatoteka = "D:/Izlaz.xml";
-        public static int seed=0;
+        public static String ulaznaDatoteka = "D:/uzorci/line/line.xml";
+        public static String izlaznaDatoteka = "D:/uzorci/line.xml";
+        public static int seed=234;
 
         public static List<String> recenice;
 

@@ -1,0 +1,797 @@
+% Predložak za izradu rada za konferenciju SU2010
+% (C) 2010 Jan Šnajder
+% KTLab, FER
+
+\documentclass[10pt, a4paper]{article}
+
+\usepackage{su2010}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings,color}
+\usepackage{caption}
+
+\renewcommand{\lstlistingname}{Program}
+
+ \lstset{
+ 		 language = C,	 
+         basicstyle=\small\ttfamily, % Standardschrift
+         numbers=left,               % Ort der Zeilennummern
+         numberstyle=\tiny,          % Stil der Zeilennummern
+         %stepnumber=2,               % Abstand zwischen den Zeilennummern
+         numbersep=2pt,              % Abstand der Nummern zum Text
+         tabsize=1,                  % Groesse von Tabs
+         extendedchars=true,         %
+         breaklines=true,            % Zeilen werden Umgebrochen
+         lineskip= 0.5pt,	
+         keywordstyle=\color{blue},
+                frame=b,         
+ %        keywordstyle=[1]\textbf,    % Stil der Keywords
+ %        keywordstyle=[2]\textbf,    %
+ %        keywordstyle=[3]\textbf,    %
+ %        keywordstyle=[4]\textbf,   \sqrt{\sqrt{}} %
+         stringstyle=\color{white}\ttfamily, % Farbe der String
+         showspaces=false,           % Leerzeichen anzeigen ?
+         showtabs=false,             % Tabs anzeigen ?
+         xleftmargin=5pt,
+         framexleftmargin=5pt,
+         framexrightmargin=1pt,
+         framexbottommargin=1pt,
+         %backgroundcolor=\color{lightgray},
+         showstringspaces=false      % Leerzeichen in Strings anzeigen ?        
+ }
+
+\title{Razrješavanje višeznačnosti riječi}
+
+%VAŽNO: Zakomentirajte sljedeću liniju kada šaljete rad na recenziju
+\name{Toni Benussi, Darko Jurić, Krešimir Mišura, Ante Trbojević} 
+
+\address{
+Sveučilište u Zagrebu, Fakultet elektrotehnike i računarstva\\
+Unska 3, 10000 Zagreb, Hrvatska\\ 
+\texttt{\{toni.benussi,darko.juric,kresimir.misura,ante.trbojevic\}@fer.hr},
+}
+          
+         
+\abstract{ Ovaj rad razmatra uporabu metoda strojnog učenja u
+razrješavanju višeznačnosti riječi \engl{word sense disambiguation}.
+Na podacima }
+
+\begin{document}
+
+\maketitleabstract
+
+\section{Uvod}
+
+Riječ, kao sastavnica svakog jezika, opisana je leksičkim izrazom i semantičkim značenjem.
+Jedan leksički izraz može imati više semantičkih značenja, pri čemu okolni kontekst
+sugerira semantičko značenje leksičkog izraza. 
+Primjerice leksički izraz \emph{jaguar} ima više semantičkih značenja
+(životinja iz porodice mačaka, britanski proizvođač automobila, 
+britanska glazbena grupa, parfem), gdje se semantičko značenje riječi \emph{jaguar}
+doznaje iz konteksta. Dakle svaka riječ u pisanom tekstu jedinstveno je označena 
+leksičkim izrazom i semantičkim značenjem. Upravo iz razloga što odnos 
+leksičkog izraza riječi i semantičkog značenja riječi nije injektivan, 
+automatizirani postupci kao što je npr.~pretraživanje teksta ili
+postavljanje upita nad bazom podataka i sl.~vrlo često korisnicima 
+daju neželjene rezultate. Danas lingvistička znanost i računarska znanost 
+nastoje pronaći tehnike koje bi dovoljno dobro 
+rješavale navedeni problem.
+
+Tehnike strojnog učenja pružaju dovoljno dobru podlogu za realizaciju sustava
+koji bi bio sposoban razriješiti višeznačnosti riječi, tj.~identificirati pravo
+značenje riječi ovisno o okolnom kontekstu. Stoga su u ovom radu istraženi postupci
+strojnog učenja za razrješavanje višeznačnosti riječi.
+
+Slijedeći problem koji se pojavljuje je kako izlučiti značajke iz konteksta.
+U većini slučajeva za značajke se uzima $n$ riječi koje se nalaze u neposrednoj blizini oko višeznačne riječi, gdje je $n \in N$ neka fiksna konstanta. Pogrešno odabran $n$ može pogoršati uspješnost klasifikacije, također intuitivno se može naslutiti kako nije svejedno koliko od tih $n$ riječi se pojavljuje u tekstu s lijeve strane višeznačne riječi, a koliko pak s desne strane.
+Upravo ovaj rad nastoji ustanoviti te zavisnosti, te zajedno s priloženim rezultatima provedenih eksperimenata iznosi zaključke kako odabrati kvalitetne značajke.
+\section{Drugi odjeljak}
+
+Ovo je drugi odjeljak.
+
+\subsection{Prvi pododjeljak}
+\label{sec:prvi}
+
+Ovo je pododjeljak drugog odjeljka.
+
+\subsection{Drugi pododjeljak}
+
+Ovo je drugi pododjeljak prvog odjeljka. Na (pod)odjeljke se 
+u tekstu možete referencirati ovako: ``u odjeljku \ref{sec:prvi}
+pokazali smo da \dots''.
+
+\subsubsection{Primjer pod-pododjeljka} 
+
+Ovo je pod-pododjeljak. Izbjegavajte pod-pododjeljke po svaku cijenu.
+
+\subsection{Primjer pododjeljka s dugačkim naslovom koji prelazi u
+drugi redak}
+
+Još jedan primjer pododjeljka.
+
+\section{Veličina rada}
+
+Rad treba imati najmanje tri, a najviše šest stranica, uključivo popis
+literature.
+
+\section{Opis uzoraka}
+Označavanje vlastite baze podataka s višeznačnim riječima izuzetno je
+skup proces. Naime za relevantnu klasifikaciju potrebno je barem
+oko tisuću uzoraka za jednu višeznačnu riječ, pri tom
+označivač za svaki uzorak mora pročitati okolni kontekst i 
+shvatiti semantičko značenje riječi te pridodati uzorku oznaku razreda,
+što predstavlja dugotrajan proces. Stoga je pribavljena besplatna
+baza podataka\footnote{\texttt{http://www.senseval.org/data.html}} s već označenim semantičkim
+značenjima za engleske riječi \emph{interest} i \emph{line}. Shodno tome u ovom radu bit će prikazani
+postupci razrješavanja višeznačnosti engleskih riječi \emph{interest} i \emph{line}.
+Tekstovi u bazi podataka su na engleskom jeziku
+i prikupljeni su iz \emph{ACL/DCI Wall Street Journal} novina.
+
+Kao značajke uzorka uzimaju se riječi koje se nalaze unutar prozora konteksta promatranog uzorka.
+Prozor konteksta $(l,r)$ \engl{window of context} sastoji se
+od $l$ riječi koji se nalaze lijevo od višeznačne riječi (lijevi prozor konteksta) 
+i $r$ riječi koji se nalaze desno od višeznačne riječi (desni prozor konteksta), pri čemu se
+interpunkcijski i pravopisni znakovi ignoriraju. Sve riječi koje su uključene u prozor konteksta ostavljene su originalnoj leksičkoj formi, tj.~nisu normalizirane, osim što su sva velika
+slova pretvorena u mala slova. 
+Ova metoda reprezentiranja skupa značajki,
+opisana u \citep{pedersen}, varijanta je metode \glqq vreća riječi" \engl{bag-of-words} koja je
+prvi put opisana u \citep{gale-etc}, a razlikuje se po tome što razlikuje 
+riječi koje se nalazi lijevo i desno od višeznačne riječi. \mbox{Slika \ref{window_of_context}}
+opisuje izlučivanje značajki s definiranim prozorom konteksta $(5,3)$.
+
+\begin{figure}[!hbtp]
+{\small \texttt{     Forward supplies can largely be stored in these same areas, and land forces are best held in reserve on \fbox{our own soil. Drawing a} \emph{line} \fbox{between military aid} and military involvement may be harder, but it can be done if we keep the distinction clearly in mind.}}
+\caption{Primjer uzorka višeznačne riječi \emph{line} s prozorom konteksta $(5, 3)$.\label{window_of_context}}
+\end{figure}
+
+Baza podataka sadrži 2368 instanci za riječ \emph{interest} i 4148 instanci za riječ \emph{line}, 
+pri čemu svaka instanca sadrži nekoliko rečenica koje predstavljaju kontekst višeznačne riječi,
+iz kojih je zatim moguće izlučiti potrebne značajke. Također svaka instanca sadrži atribut koji 
+definira semantičko značenje višeznačne riječi.
+
+Nad bazom podataka napravljena je predobrada podataka tj.~svi zapisi pretvoreni su u XML format
+u obliku kao što je prikazano na slici \ref{fig:instance_example}, gdje je \texttt{<tag key="division"/>}
+oznaka koja zamjenjuje višeznačnu riječ \emph{line} i označuje semantičko značenje riječi u tom kontekstu.
+
+\begin{figure}[!hbtp]
+{\small \texttt{
+<sentence>
+Forward supplies can largely be stored in these same areas , and land forces are best held in reserve on our own soil. Drawing a  <tag key="division"/>  between military aid and military involvement may be harder , but it can be done if we keep the distinction clearly in mind.
+</sentence>}}
+\caption{Primjer zapisa instance za višeznačnu riječ \emph{line}
+\label{fig:instance_example}}
+\end{figure}
+
+Riječ \emph{interest} ima šest različitih semantičkih značenja (vidi tablicu \ref{tab:interest_distribution}), baš kao i riječ \emph{line},
+međutim za riječ \emph{line} izdvojene su instance samo za tri semantička značenja
+(vidi tablicu \ref{tab:line_distribution}). Naime distribucija semantičkih značenja u 
+originalnoj bazi podataka za \emph{interest} i \emph{line} je vrlo neujednačen,
+stoga je stvoren umjetno uravnotežen skup instanci za \emph{line} kako
+bi mogli istražiti koliko neke metode strojnog učenja
+kvalitetno klasificiraju na neuravnoteženom skupu podataka, 
+a koliko na uravnoteženom skupu podataka.
+
+\begin{table}[!hbtp]
+\caption{Distribucija semantičkih značenja za riječ \emph{interest}}
+\label{tab:interest_distribution}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Semantičko značenje & Broj instanci \\
+\midrule
+kamate 											& 1252\\
+udjel dionica u tvrtci  						& 500\\
+interes  	 									& 361\\
+prednost ili korist 							& 178\\
+pokazati zainteresiranost						& 66\\
+prouzročiti zainteresiranost drugih 			& 11\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[!hbtp]
+\caption{Distribucija semantičkih značenja za riječ \emph{line}}
+\label{tab:line_distribution}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Semantičko značenje & Broj instanci \\
+\midrule
+tanak oblik, crta							& 373\\
+umjetna podjela, granica 					& 374\\
+formacija ljudi ili stvari					& 349\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table*}[!hbtp]
+\caption{Broj značajki za riječ \emph{interest} ovisno o veličini prozora konteksta $(l,r)$}
+\label{tab:interest_feature_set}
+\begin{center}
+\begin{tabular}{|c|ccccccccc|}
+\hline
+$l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
+\hline
+0 &  1 &  219 &  845 &  1489 &  1918 &  2269 &  3387 &  4357 &  4524 \\
+1 &  495 &  656 &  1165 &  1726 &  2118 &  2445 &  3509 &  4451 &  4617\\
+2 &  1034 &  1151 &  1580 &  2071 &  2423 &  2719 &  3720 &  4624 &  4785\\
+3 &  1515 &  1604 &  1980 &  2415 &  2716 &  2988 &  3915 &  4781 &  4940\\
+4 &  1944 &  2017 &  2345 &  2733 &  2996 &  3245 &  4125 &  4953 &  5109\\
+5 &  2301 &  2364 &  2662 &  3015 &  3261 &  3494 &  4332 &  5129 &  5282\\
+10 &  3546 &  3587 &  3817 &  4075 &  4254 &  4442 &  5121 &  5813 &  5955\\
+25 &  4906 &  4933 &  5111 &  5313 &  5455 &  5604 &  6168 &  6763 &  6885\\
+50 &  5137 &  5162 &  5335 &  5530 &  5665 &  5810 &  6361 &  6938 &  7060\\
+\hline
+\end{tabular}
+\end{center}
+\end{table*}
+
+\begin{table*}[!hbtp]
+\caption{Broj značajki za riječ \emph{line} ovisno o veličini prozora konteksta $(l,r)$}
+\label{tab:line_feature_set}
+\begin{center}
+\begin{tabular}{|c|ccccccccc|}
+\hline
+$l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
+\hline
+0  &  1 &  224 &  663 &  1020 &  1299 &  1543 &  2433 &  3395 &  3647\\
+1  &  235 &  422 &  825 &  1159 &  1427 &  1657 &  2531 &  3483 &  3731\\
+2  &  554 &  691 &  1053 &  1363 &  1617 &  1836 &  2679 &  3609 &  3849\\
+3  &  951 &  1058 &  1377 &  1657 &  1898 &  2109 &  2907 &  3803 &  4037\\
+4  &  1326 &  1416 &  1703 &  1959 &  2186 &  2384 &  3143 &  4002 &  4231\\
+5  &  1683 &  1766 &  2030 &  2267 &  2478 &  2659 &  3378 &  4198 &  4412\\
+10 &  3185 &  3244 &  3447 &  3620 &  3783 &  3927 &  4494 &  5166 &  5346\\
+25 &  5789 &  5828 &  5970 &  6094 &  6203 &  6296 &  6721 &  7205 &  7359\\
+50 &  7046 &  7082 &  7205 &  7315 &  7408 &  7491 &  7854 &  8271 &  8406\\
+\hline
+\end{tabular}
+\end{center}
+\end{table*}
+
+Kako je cilj ovog rada ustanoviti koji prozor konteksta $(l,r)$ odabrati
+ovisno o algoritmu strojnog učenja (razmatrani su k-NN, SVM, skup Bayeskovih klasfikatora)
+kako bi klasifikacija bila što uspješnija, stvoreno je 81 skupova uzoraka. Svaki
+skup uzoraka dobiven je drugačijim izlučivanjem značajki iz skupa podataka,
+pri čemu se skupovi uzoraka razlikuju po veličini prozora konteksta $(l, r)$,
+odnosno po kombinaciji koliko je riječi izlučeno s lijeve strane višeznačne riječi (varijabla $l$ u definiciji prozora konteksta), a koliko s desne strane višeznačne riječi (varijabla $r$ u definiciji prozora konteksta). Veličina lijevog prozora konteksta i desnog prozora konteksta, tj.~varijable
+$l$ i $r$ poprimaju vrijednosti iz skupa \{0, 1, 2, 3, 4, 5, 10, 25, 50\}. Ne postoji posebni
+razlog zašto su odabrane baš te vrijednosti, koje mogu poprimiti varijable $l$ i $r$,
+već se slijedila preporuka iz rada \citep{pedersen}, gdje su korištene iste vrijednosti.
+Nad svakim od tih skupova uzoraka provedeni su algoritmi: k-NN, SVM, naivni-Bayesov
+klasifikator, te su izračunate F1 mjere za svaku kombinaciju \emph{skup uzoraka - algoritam}.
+Tablica \ref{tab:interest_feature_set} i tablica \ref{tab:line_feature_set} prikazuju ukupan broj izlučenih značajki ovisno o kombinaciju $(l,r)$, tj.~ovisno o skupu uzoraka. Primjećuje
+se kako skupovi uzoraka koji su dobiveni izlučivanjem s većim prozorom konteksta imaju
+više značajki, što je i očekivano. Naime veći prozor konteksta pohvatati će više 
+različitih riječi pa će samim time i ukupan broj značajki biti veći.
+
+\section{Provođenje eksperimenata}
+Validacija i testiranje modela provedeno je unakrsnom provjerom.
+Poredak uzoraka u skupu uzoraka nasumično je ispremiješan prije
+unakrsne provjere.
+Skup uzoraka zatim je podijeljen na pet podskupova, četiri podskupa
+služe za učenje modela, dok se posljednji podskup podijeli popola
+na još dva podskupa, od kojih jedan služi za validaciju, a drugi za testiranje.
+Prije podijele popola, podskup je nasumično ispremiješan, s
+namjerom sprječavanja nepravilne distribucije uzoraka u skupu za validaciju
+ili skupu za testiranje. Nakon podijele petog podskupa na još dva skupa,
+vrši se validacija na dobivenom skupu za validaciju, dok se sa skupom za testiranje ne
+radi ništa. Nakon završene validacije
+slijedi slijedeća iteracija unakrsne provjere, tj. podskup za validaciju
+i testiranje ubacuje se u podskupove za učenje, a jedan od 4 prijašnja podskupa
+za učenje postaje skup za validaciju i testiranje. Takvih iterativnih koraka ima ukupno
+pet. Valja naglasiti kako se testiranje ne provodi odmah nakon validaciju u svakom
+iterativnom koraku unakrsne provjere, već se testiranja provodi nakon što je validacija
+provedena nad svakim od pet mogućih skupova za validaciju, nakon čega se izračunavaju
+optimalni parametri modela, te se tek nakon toga vrši testiranje. 
+
+\begin{lstlisting}[label=lst:Convolution1D,caption= Pseudok\^od implementirane unakrsne provjere]
+unakrsnaProvjera(skup uzoraka, algoritam)
+{
+	lista_skupova = podijeli skup uzorak na pet jednakih dijelova
+	za svaki podskup i iz lista_skupova{
+		skup_za_ucenje = 4 podskupa iz lista_skupova medu kojima nije i;
+		promijesaj i;
+		podijeli i na dva dijela
+		skup_za_validaciju = prva polovica podijeljenog skupa i
+		
+		nauci_model(skup_za_ucenje, algoritam)
+		validacija(skup_za_validaciju, algoritam)
+	}
+		
+	izracunaj parametre za algoritam
+	
+	za svaki podskup i iz lista_skupova{
+		skup_za_ucenje = 4 podskupa iz lista_skupova medu kojima nije i;
+		podijeli i na dva dijela
+		skup_za_testiranje = druga polovica podijeljenog skupa i
+		
+		nauci_model(skup_za_ucenje, algoritam)
+		testiraj(skup_za_testiranje, algoritam)
+	} 	
+}
+\end{lstlisting}
+
+
+Testiranje se provodi baš kao i validacija, tj.~unakrsnom provjerom kroz pet koraka, 
+ali je sada skup za validaciju neaktivan, a skup za testiranje aktivan.
+Ovakav model učenja, validacije i testiranja odabran je s razlogom, naime
+želi se iskoristi što veći skup uzoraka i za validaciju i za testiranje.
+Naime ako bi se testiranje vršilo odmah nakon validacije u svakom iterativnom
+koraku unakrsne provjere, prilikom testiranja dobiveni rezultati ne bi bili
+potpuno objektivni, jer bi rezultati testiranja u tom koraku ovisili
+o trenutačnom skupu za validaciju. TODO (srediti ovo obavezno)
+
+\section{Rezultati}
+\subsection{Klasifikacija pomoću skupa naivnih Bayesovih klasifikatora}
+\subsubsection{Rezultati za riječ \emph{interest}} 
+Nakon provedene validacije odabire se devet najtočnijih klasifikatora iz
+svakog raspona kako bi se dobio ansambl Bayesovih klasifikatora. 
+U tablici \ref{tab:interest_validation_bayes} prikazani su rezultati (F1 mjere)
+validacije, naivni Bayesovi klasifikatori koji su uključeni u ansambl su oni
+s prozorom konteksta: $(1,1)$, $(3,1)$, $(10,1)$,
+$(1,3)$, $(4,3)$, $(10,3)$, $(2,25)$, $(5,10)$, $(10,25)$.
+
+Nakon provedenog testiranja F1 mjera ansambl naivnih Bayesovih klasifikatora
+iznosi
+\begin{equation}
+\label{eq:F1_ansambl}
+F1_{ansambl} = 0.7.
+\end{equation}
+Valja primijetiti kako u ovom
+slučaju ansambl od devet naivnih klasifikatora ima manju točnost klasifikacije
+od svakog pojedinačnog naivnog Bayesovog klasifikatora od kojih je sastavljen,
+iz čega se može zaključiti da ansambl Bayesovih klasfikatora ne mora nužno poboljšati
+točnost klasifikacije. Naime u ovom slučaju bilo bi bolje, umjesto ansambla, klasificirati
+npr.~s naivnim Bayesovim klasifikatorom s definiranim prozorom konteksta (1, 1), kao
+što se može iščitati iz tablice \ref{tab:interest_validation_bayes} njegova F1 mjera iznosi
+\begin{equation}
+\label{eq:F1_1_1}
+F1_{(1,1)} = 0.81.
+\end{equation}
+Doduše treba uzeti u obzir da je mjera $F1_{ansambl}$ izračunata na skupu za testiranje,
+dok je $F1_{(1,1)}$ izračunata na skupu za validaciju, tj.~te dvije mjere nisu
+baš usporedive jer nisu dobivene na temelju istih uzoraka.
+
+\begin{table*}[!hbtp]
+\caption{F1 mjere Bayesovih klasifikatora dobivene validacijom za riječ \emph{interest}}
+\label{tab:interest_validation_bayes}
+\begin{center}
+\begin{tabular}{|c|ccccccccc|}
+\hline
+$l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
+\hline
+0  & 0,61 & 0,75 & 0,71 & 0,73 & 0,7  & 0,7  & 0,69 & 0,71 & 0,69  \\
+1  & 0,76 & 0,81 & 0,8  & 0,78 & 0,76 & 0,75 & 0,72 & 0,73 & 0,71  \\
+2  & 0,72 & 0,79 & 0,78 & 0,77 & 0,76 & 0,75 & 0,74 & 0,74 & 0,72  \\
+3  & 0,74 & 0,78 & 0,77 & 0,76 & 0,76 & 0,77 & 0,75 & 0,73 & 0,72  \\
+4  & 0,74 & 0,77 & 0,76 & 0,78 & 0,76 & 0,77 & 0,75 & 0,73 & 0,73  \\
+5  & 0,73 & 0,77 & 0,77 & 0,78 & 0,77 & 0,76 & 0,76 & 0,74 & 0,74  \\
+10 & 0,68 & 0,73 & 0,73 & 0,73 & 0,72 & 0,73 & 0,74 & 0,75 & 0,74  \\
+25 & 0,68 & 0,69 & 0,69 & 0,69 & 0,7  & 0,7  & 0,72 & 0,72 & 0,72  \\
+5' & 0,66 & 0,68 & 0,68 & 0,69 & 0,69 & 0,68 & 0,7  & 0,72 & 0,72  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table*}
+
+\begin{table}[!hbtp]
+\caption{Matrica zabune ANBK-a za riječ \emph{interest}}
+\label{tab:interest_confusion_bayes}
+\begin{center}
+\begin{tabular}{|cccccc|c|}
+\hline
+$I_1$ & $I_2$ & $I_3$ & $I_4$ & $I_5$ & $I_6$ &  \\
+\hline
+  71  & 0 &  0 &  0 & 28  & 108 &   $I_1$  \\
+   1  & 0 &  0 &  0 &  0  &  6  &   $I_2$  \\
+   1  & 0 &  0 &  0 &  4  & 37  &   $I_3$  \\
+   3  & 0 &  0 &  0 &  7  & 92  &   $I_4$  \\
+   0  & 0 &  0 &  0 & 213 & 58  &   $I_5$  \\
+   0  & 0 &  0 &  0 &  0  & 556 &   $I_6$  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Također ako se promotri tablica \ref{tab:interest_confusion_bayes} lako se uočava
+kako niti jedan uzorak nije uspješno klasificiran u razrede $I_2$, $I_3$, $I_4$.
+Naime ti razredi imaju barem za red veličine manje uzoraka od najzastupljenijeg razreda $I_6$
+u skupu uzoraka (vidi tablicu \ref{tab:interest_distribution}). Ovakvu ne posve
+uspješnu, ali prihvatljivu klasifikaciju možemo opravdati neuravnoteženošću uzoraka
+između razreda u skupu uzoraka.
+
+Ovakav postupak za riječ \emph{interest} proveden je i u radu \citep{pedersen}, pri
+čemu je korištena identična metoda i identični način validacije i testiranja. 
+U tom radu točnost\footnote{Kod klasifikacije u više od dvije klasa, točnost je jednaka F1 mjeri.} klasifikacije iznosi $0.88$. 
+Razlog, zbog čega je naš klasifikator neuspješniji, u odnosu na spomenuti rad, nije nam 
+potpuno poznat. Pretpostavljamo da je razlog u različitom pristupu zaglađivanja
+apriornih vjerojatnosti s vjerojatnošću nula, tj.~u različitim
+implementacijama Bayesovog klasifikatora (u ovom radu korištena
+je biblioteka sustava Weka). 
+
+\subsubsection{Rezultati za riječ \emph{line}} 
+Rezultati validacije mogu se vidjeti u tablici \ref{tab:line_validation_bayes}.
+AMBK je sastavljen od Bayesovih klasifikatora s prozorom konteksta: $(2,2)$,
+$(5,2)$, $(10,1)$, $(1,4)$, $(5,4)$, $(10,4)$, $(2,10)$, $(5,10)$ i $(10,10)$.
+F1 mjera AMBK-a u ovom slučaju iznosi
+\begin{equation}
+\label{eq:F1_ansambl_line}
+F1_{ansambl} = 0.91,
+\end{equation}
+što se može smatrati izuzetno uspješnom klasifikacijom. 
+Također valja primijetiti kako u ovom slučaju ANBK ima veću točnost
+od bilo kojeg pojedinačnog NB klasifikatora, što
+se može pravdati uravnoteženošću skupa uzoraka po klasama.
+
+\subsection{Klasifikacija pomoću SVM-a}
+\subsubsection{Rezultati za riječ \emph{interest}} 
+\subsubsection{Rezultati za riječ \emph{line}} 
+\begin{table*}[!hbtp]
+\caption{F1 mjere Bayesovih klasifikatora dobivene validacijom za riječ \emph{line}}
+\label{tab:line_validation_bayes}
+\begin{center}
+\begin{tabular}{|c|ccccccccc|}
+\hline
+$l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
+\hline
+0  & 0,32  & 0,55  & 0,63  & 0,67  & 0,66  & 0,63  & 0,66  & 0,66  & 0,65 \\  
+1  & 0,67  & 0,68  & 0,73  & 0,76  & 0,8   & 0,79  & 0,77  & 0,73  & 0,72 \\ 
+2  & 0,72  & 0,73  & 0,79  & 0,78  & 0,79  & 0,79  & 0,82  & 0,77  & 0,76 \\ 
+3  &  0,77  & 0,74  & 0,78  & 0,75  & 0,78  & 0,8   & 0,83  & 0,79  & 0,81 \\ 
+4  & 0,78  & 0,77  & 0,81  & 0,8   & 0,79  & 0,8   & 0,83  & 0,83  & 0,85 \\ 
+5  & 0,8   & 0,81  & 0,83  & 0,83  & 0,82  & 0,83  & 0,86  & 0,84  & 0,85 \\ 
+10 & 0,81  & 0,86  & 0,83  & 0,86  & 0,87  & 0,87  & 0,9   & 0,9   & 0,9  \\
+25 & 0,76  & 0,77  & 0,81  & 0,81  & 0,82  & 0,84  & 0,85  & 0,83  & 0,83 \\ 
+50 & 0,72  & 0,76  & 0,76  & 0,76  & 0,79  & 0,81  & 0,82  & 0,82  & 0,81 \\ 
+\hline
+\end{tabular}
+\end{center}
+\end{table*}
+
+\begin{table}[!hbtp]
+\caption{Matrica zabune ANBK-a za riječ \emph{line}}
+\label{tab:line_confusion_bayes}
+\begin{center}
+\begin{tabular}{|ccc|c|}
+\hline
+$L_1$ & $L_2$ & $L_3$ &  \\
+\hline
+  201 &  8  &  3  &   $L_1$ \\
+  11  & 175 &  2  &   $L_2$ \\
+  22  & 6   & 122 &   $L_3$ \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{Anonimizacija}
+
+Prije slanja rada na recenziju, rad treba (privremeno) anonimizirati.
+To uključuje četiri stvari:
+
+\begin{enumerate}
+
+\item Sakrijte imena autora navedena ispod naslova rada. Nemojte
+brisati imena autora jer ćete time poremetiti raspored teksta; samo
+zakomentirajte liniju \emph{name}.
+
+\item Uklonite bilo kakve tragove iz teksta na temelju kojih bi
+recenzent mogao naslutiti tko su autori teksta.
+
+\item Uklonite zahvalu, ako je imate.
+
+\item Provjerite da u generiranom PDF-dokumentu nisu uključeni
+metapodatci iz kojih bi bilo vidljivo tko je generirao PDF.
+
+\end{enumerate}
+
+\section{Ilustracije i tablice}
+
+\subsection{Ilustracije}
+
+Ovo je primjer uključivanja ilustracije. Ilustracije u \LaTeX-k\^od
+uključite \emph{nakon} teksta koji se na njih poziva. Pustite \LaTeX\
+da ilustraciju smjesti tamo gdje misli da je najbolje (to je najčešće
+pri vrhu stranice i najčešće tamo gdje je vi nikad ne biste
+smjestili).  Na sliku se referencirate ovako: ``na
+slici~\ref{fig:slika1} prikazano je \dots''. Koristite tildu
+(\verb.~.) kako biste spriječili razdvajanje između riječi ``slika'' i
+broja slike.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\columnwidth]{su2010}
+\caption{Ovo je opis slike. Puna rečenica koja završava točkom. Opis
+ide ispod slike. Opis treba biti kratak; detalje objasnite u tekstu.}
+\label{fig:slika1}
+\end{center}
+\end{figure}
+
+\subsection{Tablice}
+
+Postoje dvije vrste tablice: uska tablica koja stane unutar jednog
+stupca i široka tablica koja prelazi 
+preko oba stupca.
+
+\subsubsection{Uske tablice}
+
+Primjer uske tablice je tablica \ref{tab:uska-tablica}. Nipošto
+nemojte koristiti okomite crte u tablici. Te crte nemaju smisla i loše
+izgledaju.
+
+%\subsection{Tablica}
+
+\begin{table}
+\caption{Ovo je opis tablice. Opis ide iznad tablice.}
+\label{tab:uska-tablica}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Zaglavlje1 & Zaglavlje2 \\
+\midrule
+Jedan & Tekst u prvom retku\\
+Dva   & Tekstu u drugom retku\\
+Tri   & Tekst u trećem retku\\
+      & Tekst u četvrtom retku\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsection{Široke tablice}
+
+Tablica \ref{tab:siroka-tablica} je primjer široke tablice koja ide
+preko oba stupca. Slično se mogu napraviti i slike koje idu preko oba
+stupca.
+
+\begin{table*}
+\caption{Opis široke tablice.}
+\label{tab:siroka-tablica}
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+Zaglavlje1 & Zaglavlje2 & Zaglavlje 3\\
+\midrule
+A & Neki vrlo dugačak tekst koji je širi od jednog stupca & $128$\\
+B & Neki vrlo dugačak tekst koji je širi od jednog stupca & $3123$\\
+C & Neki vrlo dugačak tekst koji je širi od jednog stupca & $-32$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table*}
+
+\section{Matematičke formule}
+
+Matematičke formule koje se pojavljuju unutar rečenice pišite unutar
+tzv.~\emph{inline} matematičke okoline: $2+3$, $\sqrt{16}$,
+$h(x)=\mathbf{1}(\theta_1 x_1 + \theta_0>0)$. Veće formule pišite u
+tzv.~\emph{displayed} matematičkoj okolini:
+
+\[
+b^{(i)}_k = \begin{cases}
+1 & \text{ako 
+    $k = \text{argmin}_j \| \mathbf{x}^{(i)} - \mathbf{\mu}_j \|$}\\
+0 & \text{inače}
+\end{cases}
+\]
+
+Matematičke izraze na koje se kasnije pozivate pišite unutar
+okoline \emph{equation}:
+
+\begin{equation}\label{eq:kmeans-error}
+J = \sum_{i=1}^N \sum_{k=1}^K 
+b^{(i)}_k \| \mathbf{x}^{(i)} - \mathbf{\mu}_k \|^2
+\end{equation}
+
+Sada se možete pozvati na \eqref{eq:kmeans-error}. Ako se
+odlomak nastavlja nakon formule
+
+\begin{equation}
+f(x) = x^2 + \varepsilon
+\end{equation}
+
+\noindent kao ovaj ovdje, onda obavezno na početku nastavka odlumka
+koristite naredbu \emph{noindent} kako biste spriječili uvlačenje
+retka na početku odlomka.
+
+Ako se matematička formula prostire kroz više redaka, koristite
+naredbu \emph{align}.
+\begin{align}
+\mathbb{E}(X Y) &= \mathbb{E}(X)\, \mathbb{E}(Y)\nonumber\\
+\mathit{Var}(X+Y) &= \mathit{Var}(X) + \mathit{Var}(Y)\nonumber
+\end{align}
+
+Matematičke nazive koji se sastoje od više slova trebate pisati unutar
+narebe \emph{mathit}, u suprotnom \LaTeX između slova umeće razmak kao
+da je riječ o množenju. Usporedite
+$\mathit{Consistent}(h,\mathcal{D})$ i\\
+$Consistent(h,\mathcal{D})$.
+
+Ako vam treba neki matematički simbol, znate kako izgleda, ali ne znate
+kako se zove odgovarajuća naredba u \LaTeX-u, iskušajte
+\emph{Detexify}.\footnote{\texttt{http://detexify.kirelabs.org/}}
+(Usput rečeno, riječ je o klasifikatoru k-NN pisanome u Haskellu.)
+
+\section{Pseudok\^od i programski k\^od}
+
+Za pseudok\^od je nabolje koristiti paket \emph{Algorithm2e}.
+Alternativno, a posebice za programski k\^od, možete koristiti pakete
+\emph{listings} ili \emph{fancyvrb}. Navođenje programskog k\^oda
+izbjegnite, osim ako za to nemate valjan razlog.
+
+\section{Navodi literature}
+
+Navodi literature pišu se u zagradi s prezimenom autora prvog autora
+te godinom izdanja \citep{chomsky-73}.  Više navoda se pišu jedan iza
+drugoga, u zajedničkoj zagradi i međusobno odvojeni točka-zarezom
+\citep{chomsky-73,chave-64,feigl-58}. Navodi se najčešće pišu na kraju
+rečenice, a svakako prije interpunkcijskog znaka za kraj rečenice.
+
+Ako rad ima više od dva autora, piše se ime samo prvog autora, nakon
+čega slijedi kratica \emph{at al}, koja znači \emph{et alia} tj.~i
+drugi \citep{johnson-etc}. Ako su samo dva autora, pišu se prezimena
+oba autora \citep{johnson-howells}.
+
+Ako je ime autora ugrađeno u rečenicu, onda se ime autora piše izvan
+zagrada, a u zagrade ide samo godina izdanja.  Npr.~\citet{chomsky-73}
+je predložio da\dots''. Razlika je dakle u tome referencirate li se na
+s\^am rad ili na autora koji je napisao taj rad.
+
+Popis literature dan je u abecednom poretku na kraju članka.  Oblik
+navoda ovisi o vrsti bibliografske jedinice: konferencijski radovi
+\citep{chave-64}, knjige \citep{butcher-81}, članci u časopisu
+\citep{howells-51}, doktorske disertacije \citep{croft-78} i poglavlja
+knjige \citep{feigl-58}. 
+
+Sve ovo dobivate automatski ako koristite BibTeX. U datoteku
+\texttt{su2010.bbl} upišite navode literature, a zatim se na njih
+pozivajte putem njihovih simboličkih oznaka.
+
+\section{Tuđice}
+
+Umjesto tuđica (a to će biti uglavnom engleske riječi) trebate pisati
+hrvatski prijevod, a tuđice trebate navesti u kurzivu u zagradi. Na
+primjer: stablo odlučivanja \engl{decision tree}. Nemojte pisati
+velika početna slova engleskog naziva, osim ako se ne radi o vlastitom
+imenu. Ako želite odmah uvesti i kraticu, dodajte i nju u zagradu. Na
+primjer: umjetna neuronska mreža \engla{artificial neural
+network}{ANN}. Iznimno, ako za neki engleski naziv nema odgovarajućeg
+prijevoda, možete koristiti engleski naziv, ali onda obavezno uvijek u
+kurzivu.
+
+Nikada, baš nikada, engleske nazive ne koristite u naslovima
+odjeljaka.
+
+\section{Dodatne tipografske napomene}
+
+Slijede neke dodatne tipografske napomene.
+
+\subsection{Naglašavanje}
+
+Nipošto nemojte koristiti \textbf{masna slova}.  Ako baš želite nešto
+naglasiti, koristite \emph{kurziv}.
+
+\subsection{Zagrade}
+
+Ispred zagrade obavezno se piše bjelina (to nije poziv funkcije), a
+također i iza zagrade, osim, naravno, ako iza zagrade slijedi
+interpunkcijski znak.
+
+\subsection{Navodnici}
+
+Navodnici se pišu ``ovako'' (različiti su lijevi i desni navodnici), a
+ne "ovako" niti `ovako' niti nešto treće. Doduše, navodnici se rijetko
+koriste u znanstvenom tekstu.
+
+\subsection{Trotočje}
+
+Trotočje (tzv.~elipsa) ``\dots'' nema što tražiti u znanstvenom
+tekstu. Koristite kratice ``itd.''~i ``i sl.''. U okviru matematičkog
+teksta, naravno, tri točke imaju drugo značenje (skraćen prikaz niza)
+i koristite ih ako vam trebaju.
+
+\subsection{Razmaci nakon kratica}
+
+Nakon kratice koja završava točkom, a koja nije kraj rečenice, stavite
+tildu (\verb.~.) umjesto razmaka. U suprotnom će \LaTeX\ misliti da se
+radi o kraju rečenice i stavit će nešto veći razmak. Pogledajte
+razliku između \\
+\noindent ``tzv.~elipsa'' i \\
+``tzv. elipsa''\\ 
+\noindent (mala je, ali postoji). Tilda ujedno sprječava rastavljanje
+rečenice na tom mjestu.
+
+\subsection{Brojke}
+
+Brojke manje od 10 raspišite riječima, osim ako se radi vrijednostima
+parametara, rezultatima ili sl. Dakle, umjesto ``u 3 eksperimenta'',
+pišite ``u tri eksperimenta''.
+
+\subsection{Matematički simboli}
+
+Sve matematičke simbole, makar bili jednoslovni, pišite unutar
+matematičke okoline: $N$ umjesto N, $k$ umjesto k, itd. Nikada ne
+započinjite rečenicu matematičkim simbolom. Umjesto toga rečenicu
+započnite odgovarajućom imenicom.  Npr.~umjesto ``$N$ je broj
+koji\dots'' napišite ``Vrijednost $N$ je broj koji\dots''.
+
+\subsection{Crte i spojnice}
+
+Između dijelova polusloženica koristite pišete jednu crticu odnosno
+spojnicu: aritmetičko-logička operacija, EM-algoritam, VC-dimenzija,
+web-stranica.  Između dijelova umetnute rečenice, piše se crta, koja
+se u \LaTeX-u dobiva pisanjem dviju crtica: ``Prvi eksperiment je
+pokazao -- premda ne posve uvjerljivo -- da točnost klasifikatora ne
+ovisi samo o \dots''.
+
+\subsection{Fusnote}
+
+Ovo je primjer fusnote.\footnote{Ovo je primjer teksta fusnote.}
+Oznaku fusnote stavljajte nakon interpunkcijskog znaka, ako se odnosi
+na rečenicu ili na zadnju riječ, inače je stavite nakon riječi na koju
+se odnosi. Fusnote pokušajte izbjegavati, osim za poveznice
+(v.~dolje).
+
+\subsection{Poveznice}
+
+Poveznice na web-stranice pišite neproporcionalnim fontom:
+\texttt{ktlab.fer.hr}. Svakako pokušajte sve poveznice smjestiti u
+fusnote;\footnote{\texttt{ktlab.fer.hr}} tekst u kojem se pojavljuju
+poveznice izgleda loše zato jer su poveznice često predugačke.
+
+\subsection{Natuknice}
+
+Natuknice međusobno odvojite točka-zarezom:
+
+\begin{enumerate}
+\item Prva natuknica,
+\item Druga natuknica,
+\item Zadnju natuknicu završite točkom.
+\end{enumerate}
+
+Ako neka od natuknica u sebi već sadrži zarez, onda sve natuknice
+završite točka zarezom, osim zadnje:
+
+\begin{itemize}
+\item Prva natuknica, koja u sebi ima zarez;
+\item Druga natuknica;
+\item Zadnja natuknica.
+\end{itemize}
+
+Natuknice koristite umjereno (zbog prostora).
+
+\subsection{Siročad}
+
+Po svaku cijenu nastojte izbjeći odlomke kod kojih u zadnjem retku
+visi samo jedna riječ, kao što je slučaj s ovim odlomkom. To lako
+možete riješiti preoblikovanjem nekih rečenica, no taj posao ostavite
+za kraj (može i nakon recenzije).
+
+Isto vrijedi i za posljednje retke odlomaka ili (još gore) odsječaka
+koji usamljeno prelaze na iduću stranicu.
+
+\section{Zaključak}
+
+Zaključak je posljednji numerirani odsječak rada. Zaključak bi trebao
+biti veličine do najviše pola visine stupca. Zaključak je dobro
+razdijeliti u više odlomaka (npr.~dva ili tri).
+
+%VAŽNO: Privremeno uklonite zahvalu kada šaljete rad na recenziju.
+\section*{Zahvale}
+
+Po želji možete prije popisa literature uključiti ovaj odjeljak i
+zahvaliti onima koji su vam na bilo koji način pomogli u izradi rada,
+a nisu autori rada. Ako nemate kome zahvaliti, obrišite ovaj odjeljak.
+
+\bibliographystyle{su2010}
+\bibliography{su2010} 
+
+\end{document}
+
