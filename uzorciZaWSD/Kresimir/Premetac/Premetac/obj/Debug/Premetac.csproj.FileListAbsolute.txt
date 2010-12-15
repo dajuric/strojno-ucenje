@@ -3,3 +3,8 @@ C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\bin\De
 C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\obj\Debug\Premetac.exe
 C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Premetac\Premetac\obj\Debug\Premetac.pdb
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Premetac\Premetac\obj\Debug\Premetac.exe
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Premetac\Premetac\obj\Debug\Premetac.pdb
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Premetac\Premetac\bin\Debug\Premetac.exe
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Premetac\Premetac\bin\Debug\Premetac.pdb
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Premetac\Premetac\obj\Debug\ResolveAssemblyReference.cache

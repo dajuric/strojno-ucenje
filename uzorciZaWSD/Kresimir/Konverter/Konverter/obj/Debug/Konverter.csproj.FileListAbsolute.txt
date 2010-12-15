@@ -3,3 +3,8 @@ C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\bin\
 C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\obj\Debug\Konverter.exe
 C:\Users\Kresimir\Documents\Visual Studio 2008\Projects\Konverter\Konverter\obj\Debug\Konverter.pdb
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Konverter\Konverter\obj\Debug\Konverter.exe
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Konverter\Konverter\obj\Debug\Konverter.pdb
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Konverter\Konverter\bin\Debug\Konverter.exe
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Konverter\Konverter\bin\Debug\Konverter.pdb
+D:\Ante\Documents\FER\Diplomski\1 semestar\Strojno učenje\Projekt3\trunk\uzorciZaWSD\Kresimir\Konverter\Konverter\obj\Debug\ResolveAssemblyReference.cache
