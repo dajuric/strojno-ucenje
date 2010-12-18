@@ -59,7 +59,17 @@ Unska 3, 10000 Zagreb, Hrvatska\\
          
 \abstract{ Ovaj rad razmatra uporabu metoda strojnog učenja u
 razrješavanju višeznačnosti riječi \engl{word sense disambiguation}.
-Na podacima }
+Ispituje se uspješnost SVM-a i ansambla naivnih Bayesovih klasifikatora (ANBK)
+na jednom uravnoteženom skupu uzoraka i na jednom neuravnoteženom
+skupu uzorka, te se ocjenjuje uspješnost tih postupaka na takvim
+skupovima. Nenormalizirane riječi teksta (u orginalnom leksičkom obliku) koriste se
+kao značajke. Rezultati pokazuju kako SVM ima visoku uspješnost točne klasfikacije, dok
+ANBK ima lošu uspješnost na neuravnoteženom skupu. U radu se provodi postupak
+pronalaska dobrih značajki za klasifikaciju, tj.~nastoji se
+ustanoviti koliko riječi, koje se nalaze u neposrednoj blizini višeznačne riječi u samom tekstu,
+uzimati prilikom gradnje klasifikatora i klasifikacije. 
+Rezultati pokazuju kako se izlučivanjem 15-ak riječi oko višeznačne riječi postiže
+dobra točnost klasifikacije.}
 
 \begin{document}
 
@@ -90,34 +100,6 @@ strojnog učenja za razrješavanje višeznačnosti riječi.
 Slijedeći problem koji se pojavljuje je kako izlučiti značajke iz konteksta.
 U većini slučajeva za značajke se uzima $n$ riječi koje se nalaze u neposrednoj blizini oko višeznačne riječi, gdje je $n \in N$ neka fiksna konstanta. Pogrešno odabran $n$ može pogoršati uspješnost klasifikacije, također intuitivno se može naslutiti kako nije svejedno koliko od tih $n$ riječi se pojavljuje u tekstu s lijeve strane višeznačne riječi, a koliko pak s desne strane.
 Upravo ovaj rad nastoji ustanoviti te zavisnosti, te zajedno s priloženim rezultatima provedenih eksperimenata iznosi zaključke kako odabrati kvalitetne značajke.
-\section{Drugi odjeljak}
-
-Ovo je drugi odjeljak.
-
-\subsection{Prvi pododjeljak}
-\label{sec:prvi}
-
-Ovo je pododjeljak drugog odjeljka.
-
-\subsection{Drugi pododjeljak}
-
-Ovo je drugi pododjeljak prvog odjeljka. Na (pod)odjeljke se 
-u tekstu možete referencirati ovako: ``u odjeljku \ref{sec:prvi}
-pokazali smo da \dots''.
-
-\subsubsection{Primjer pod-pododjeljka} 
-
-Ovo je pod-pododjeljak. Izbjegavajte pod-pododjeljke po svaku cijenu.
-
-\subsection{Primjer pododjeljka s dugačkim naslovom koji prelazi u
-drugi redak}
-
-Još jedan primjer pododjeljka.
-
-\section{Veličina rada}
-
-Rad treba imati najmanje tri, a najviše šest stranica, uključivo popis
-literature.
 
 \section{Opis uzoraka}
 Označavanje vlastite baze podataka s višeznačnim riječima izuzetno je
@@ -342,7 +324,7 @@ Nakon provedenog testiranja F1 mjera ansambl naivnih Bayesovih klasifikatora
 iznosi
 \begin{equation}
 \label{eq:F1_ansambl}
-F1_{ansambl} = 0.7.
+F1_{AMBK(interest)} = 0.7.
 \end{equation}
 Valja primijetiti kako u ovom
 slučaju ansambl od devet naivnih klasifikatora ima manju točnost klasifikacije
@@ -368,12 +350,12 @@ baš usporedive jer nisu dobivene na temelju istih uzoraka.
 $l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
 \hline
 0  & 0,61 & 0,75 & 0,71 & 0,73 & 0,7  & 0,7  & 0,69 & 0,71 & 0,69  \\
-1  & 0,76 & 0,81 & 0,8  & 0,78 & 0,76 & 0,75 & 0,72 & 0,73 & 0,71  \\
-2  & 0,72 & 0,79 & 0,78 & 0,77 & 0,76 & 0,75 & 0,74 & 0,74 & 0,72  \\
-3  & 0,74 & 0,78 & 0,77 & 0,76 & 0,76 & 0,77 & 0,75 & 0,73 & 0,72  \\
-4  & 0,74 & 0,77 & 0,76 & 0,78 & 0,76 & 0,77 & 0,75 & 0,73 & 0,73  \\
-5  & 0,73 & 0,77 & 0,77 & 0,78 & 0,77 & 0,76 & 0,76 & 0,74 & 0,74  \\
-10 & 0,68 & 0,73 & 0,73 & 0,73 & 0,72 & 0,73 & 0,74 & 0,75 & 0,74  \\
+1  & 0,76 & \textbf{0,81} & 0,8  & \textbf{0,78} & 0,76 & 0,75 & 0,72 & 0,73 & 0,71  \\
+2  & 0,72 & 0,79 & 0,78 & 0,77 & 0,76 & 0,75 & \textbf{0,74} & 0,74 & 0,72  \\
+3  & 0,74 & \textbf{0,78} & 0,77 & 0,76 & 0,76 & 0,77 & 0,75 & 0,73 & 0,72  \\
+4  & 0,74 & 0,77 & 0,76 & \textbf{0,78} & 0,76 & 0,77 & 0,75 & 0,73 & 0,73  \\
+5  & 0,73 & 0,77 & 0,77 & 0,78 & 0,77 & 0,76 & \textbf{0,76} & 0,74 & 0,74  \\
+10 & 0,68 & \textbf{0,73} & 0,73 & \textbf{0,73} & 0,72 & 0,73 & 0,74 & \textbf{0,75} & 0,74  \\
 25 & 0,68 & 0,69 & 0,69 & 0,69 & 0,7  & 0,7  & 0,72 & 0,72 & 0,72  \\
 5' & 0,66 & 0,68 & 0,68 & 0,69 & 0,69 & 0,68 & 0,7  & 0,72 & 0,72  \\
 \hline
@@ -423,16 +405,12 @@ $(5,2)$, $(10,1)$, $(1,4)$, $(5,4)$, $(10,4)$, $(2,10)$, $(5,10)$ i $(10,10)$.
 F1 mjera AMBK-a u ovom slučaju iznosi
 \begin{equation}
 \label{eq:F1_ansambl_line}
-F1_{ansambl} = 0.91,
+F1_{AMBK(line)} = 0.91,
 \end{equation}
 što se može smatrati izuzetno uspješnom klasifikacijom. 
 Također valja primijetiti kako u ovom slučaju ANBK ima veću točnost
 od bilo kojeg pojedinačnog NB klasifikatora, što
 se može pravdati uravnoteženošću skupa uzoraka po klasama.
-
-\subsection{Klasifikacija pomoću SVM-a}
-\subsubsection{Rezultati za riječ \emph{interest}} 
-\subsubsection{Rezultati za riječ \emph{line}} 
 \begin{table*}[!hbtp]
 \caption{F1 mjere Bayesovih klasifikatora dobivene validacijom za riječ \emph{line}}
 \label{tab:line_validation_bayes}
@@ -442,12 +420,12 @@ se može pravdati uravnoteženošću skupa uzoraka po klasama.
 $l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
 \hline
 0  & 0,32  & 0,55  & 0,63  & 0,67  & 0,66  & 0,63  & 0,66  & 0,66  & 0,65 \\  
-1  & 0,67  & 0,68  & 0,73  & 0,76  & 0,8   & 0,79  & 0,77  & 0,73  & 0,72 \\ 
-2  & 0,72  & 0,73  & 0,79  & 0,78  & 0,79  & 0,79  & 0,82  & 0,77  & 0,76 \\ 
+1  & 0,67  & 0,68  & 0,73  & 0,76  & \textbf{0,8}   & 0,79  & 0,77  & 0,73  & 0,72 \\ 
+2  & 0,72  & 0,73  & \textbf{0,79}  & 0,78  & 0,79  & 0,79  & \textbf{0,82}  & 0,77  & 0,76 \\ 
 3  &  0,77  & 0,74  & 0,78  & 0,75  & 0,78  & 0,8   & 0,83  & 0,79  & 0,81 \\ 
 4  & 0,78  & 0,77  & 0,81  & 0,8   & 0,79  & 0,8   & 0,83  & 0,83  & 0,85 \\ 
-5  & 0,8   & 0,81  & 0,83  & 0,83  & 0,82  & 0,83  & 0,86  & 0,84  & 0,85 \\ 
-10 & 0,81  & 0,86  & 0,83  & 0,86  & 0,87  & 0,87  & 0,9   & 0,9   & 0,9  \\
+5  & 0,8   & 0,81  & \textbf{0,83}  & \textbf{0,83}  & 0,82  & 0,83  & \textbf{0,86}  & 0,84  & 0,85 \\ 
+10 & 0,81  & \textbf{0,86}  & 0,83  & 0,86  & \textbf{0,87}  & 0,87  & \textbf{0,9}   & 0,9   & 0,9  \\
 25 & 0,76  & 0,77  & 0,81  & 0,81  & 0,82  & 0,84  & 0,85  & 0,83  & 0,83 \\ 
 50 & 0,72  & 0,76  & 0,76  & 0,76  & 0,79  & 0,81  & 0,82  & 0,82  & 0,81 \\ 
 \hline
@@ -471,324 +449,155 @@ $L_1$ & $L_2$ & $L_3$ &  \\
 \end{center}
 \end{table}
 
-\section{Anonimizacija}
-
-Prije slanja rada na recenziju, rad treba (privremeno) anonimizirati.
-To uključuje četiri stvari:
-
-\begin{enumerate}
-
-\item Sakrijte imena autora navedena ispod naslova rada. Nemojte
-brisati imena autora jer ćete time poremetiti raspored teksta; samo
-zakomentirajte liniju \emph{name}.
-
-\item Uklonite bilo kakve tragove iz teksta na temelju kojih bi
-recenzent mogao naslutiti tko su autori teksta.
-
-\item Uklonite zahvalu, ako je imate.
-
-\item Provjerite da u generiranom PDF-dokumentu nisu uključeni
-metapodatci iz kojih bi bilo vidljivo tko je generirao PDF.
-
-\end{enumerate}
-
-\section{Ilustracije i tablice}
-
-\subsection{Ilustracije}
-
-Ovo je primjer uključivanja ilustracije. Ilustracije u \LaTeX-k\^od
-uključite \emph{nakon} teksta koji se na njih poziva. Pustite \LaTeX\
-da ilustraciju smjesti tamo gdje misli da je najbolje (to je najčešće
-pri vrhu stranice i najčešće tamo gdje je vi nikad ne biste
-smjestili).  Na sliku se referencirate ovako: ``na
-slici~\ref{fig:slika1} prikazano je \dots''. Koristite tildu
-(\verb.~.) kako biste spriječili razdvajanje između riječi ``slika'' i
-broja slike.
-
-\begin{figure}
+\subsection{Klasifikacija pomoću SVM-a}
+\subsubsection{Rezultati za riječ \emph{interest}}
+U tablici \ref{tab:interest_validation_svm} nalaze se rezultati validacije.
+Za svaki prozor konteksta $(i,j)$ validacijom je izračunat parametar C koji
+daje najmanju pogrešku na skupu za validaciju. Onaj SVM kod kojeg kombinacija veličine prozora konteksta i parametra C daje najmanju pogrešku na skupu za validaciju se odabire za testiranje.
+U našem slučaju, kao što se može očitati iz tablice \ref{tab:interest_validation_svm}, to je SVM s prozorom konteksta (5,4) i parametrom $C=0.75$.
+\begin{table*}[!hbtp]
+\caption{Pogreške i vrijednosti parametara C nakon provedene validacije SVM-a za riječ \emph{interest}}
+\label{tab:interest_validation_svm}
 \begin{center}
-\includegraphics[width=\columnwidth]{su2010}
-\caption{Ovo je opis slike. Puna rečenica koja završava točkom. Opis
-ide ispod slike. Opis treba biti kratak; detalje objasnite u tekstu.}
-\label{fig:slika1}
+\begin{tabular}{|c|ccccccccc|}
+\hline
+$l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
+\hline
+0 & 0.46; 2.5 & 0.28; 2.5 & 0.27; 2.5 & 0.26; 0.75 & 0.24; 1.5 & 0.23; 0.625 & 0.24; 0.5 & 0.24; 0.75 & 0.24; 0.375 \\
+1 & 0.22; 2.5 & 0.15; 1.75 & 0.14; 0.5 & 0.13; 1.5 & 0.15; 0.75 & 0.14; 0.5 & 0.15; 2.5 & 0.15; 0.5 & 0.15; 0.375 \\
+2 & 0.20; 1 & 0.12; 1.25 & 0.12; 0.625 & 0.12; 0.75 & 0.13; 0.75 & 0.12; 1 & 0.12; 0.75 & 0.13; 0.5 & 0.13; 0.5 \\
+3 & 0.19; 1 & 0.11; 0.5 & 0.11; 1.5 & 0.11; 0.75 & 0.11; 1.5 & 0.11; 0.5 & 0.11; 0.25 & 0.13; 0.5 & 0.13; 0.5 \\
+4 & 0.18; 2 & 0.11; 0.75 & 0.11; 0.75 & 0.11; 2.5 & 0.10; 0.25 & 0.10; 2.5 & 0.10; 0.25 & 0.13; 2.5 & 0.13; 2.5 \\
+5 & 0.18; 0.5 & 0.12; 0.5 & 0.12; 2.5 & 0.11; 0.5 & \textbf{0.10; 0.75} & 0.10; 2.5 & 0.10; 0.5 & 0.12; 2.5 & 0.12; 2.5 \\
+10 & 0.20; 0.25 & 0.12; 0.25 & 0.12; 0.25 & 0.12; 2.5 & 0.12; 2.5 & 0.12; 2.5 & 0.11; 2.5 & 0.12; 2.5 & 0.12; 2.5 \\
+25 & 0.21; 0.5 & 0.14; 0.375 & 0.14; 0.5 & 0.14; 2.5 & 0.13; 2.5 & 0.12; 0.5 & 0.12; 2.5 & 0.13; 2.5 & 0.13; 0.25 \\
+50 & 0.20; 0.5 & 0.14; 0.5 & 0.14; 0.25 & 0.14; 2.5 & 0.13; 0.5 & 0.12; 0.25 & 0.12; 2.5 & 0.13; 0.125 & 0.14; 2.5 \\
+\hline
+\end{tabular}
 \end{center}
-\end{figure}
-
-\subsection{Tablice}
-
-Postoje dvije vrste tablice: uska tablica koja stane unutar jednog
-stupca i široka tablica koja prelazi 
-preko oba stupca.
-
-\subsubsection{Uske tablice}
-
-Primjer uske tablice je tablica \ref{tab:uska-tablica}. Nipošto
-nemojte koristiti okomite crte u tablici. Te crte nemaju smisla i loše
-izgledaju.
-
-%\subsection{Tablica}
-
-\begin{table}
-\caption{Ovo je opis tablice. Opis ide iznad tablice.}
-\label{tab:uska-tablica}
+\end{table*}
+\begin{table*}[!hbtp]
+\caption{Pogreške i vrijednosti parametara C nakon provedene validacije SVM-a za riječ \emph{line}}
+\label{tab:line_validation_svm}
 \begin{center}
-\begin{tabular}{ll}
-\toprule
-Zaglavlje1 & Zaglavlje2 \\
-\midrule
-Jedan & Tekst u prvom retku\\
-Dva   & Tekstu u drugom retku\\
-Tri   & Tekst u trećem retku\\
-      & Tekst u četvrtom retku\\
-\bottomrule
+\begin{tabular}{|c|ccccccccc|}
+\hline
+$l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
+\hline
+0 & 0.67; 2.5 & 0.40; 2.5 & 0.39; 3 & 0.36; 4.5 & 0.36; 2.75 & 0.36; 1 & 0.35; 0.375 & 0.36; 0.625 & 0.36; 0.5 \\
+1 & 0.34; 2.5 & 0.27; 2.5 & 0.27; 1.5 & 0.27; 2 & 0.27; 3 & 0.26; 1.5 & 0.27; 0.375 & 0.27; 0.375 & 0.25; 0.375 \\
+2 & 0.25; 1.5 & 0.20; 2.5 & 0.18; 0.5 & 0.19; 2.5 & 0.18; 1 & 0.17; 0.875 & 0.18; 1.375 & 0.19; 1.5 & 0.19; 0.875 \\
+3 & 0.22; 6 & 0.18; 3.75 & 0.17; 0.5 & 0.16; 0.25 & 0.18; 4.5 & 0.18; 0.5 & 0.16; 1.5 & 0.16; 0.5 & 0.16; 0.5 \\
+4 & 0.23; 2.5 & 0.18; 0.5 & 0.17; 0.5 & 0.16; 0.375 & 0.16; 0.5 & 0.15; 1.5 & 0.14; 0.5 & 0.15; 4.5 & \textbf{0.13; 0.25} \\
+5 & 0.21; 0.625 & 0.18; 0.5 & 0.17; 2.5 & 0.16; 0.5 & 0.16; 2.5 & 0.16; 2.5 & 0.16; 2.5 & 0.16; 0.5 & 0.16; 0.5 \\
+10 & 0.24; 0.5 & 0.21; 2.5 & 0.19; 2.5 & 0.17; 0.5 & 0.16; 2.5 & 0.15; 2.5 & 0.14; 2.5 & 0.14; 2.5 & 0.15; 2.5 \\
+25 & 0.24; 0.375 & 0.20; 0.5 & 0.19; 0.25 & 0.19; 2.5 & 0.19; 2.5 & 0.18; 2.5 & 0.16; 2.5 & 0.16; 2.5 & 0.15; 2.5 \\
+50 & 0.27; 2.5 & 0.19; 0.141 & 0.21; 2.5 & 0.21; 0.5 & 0.21; 0.5 & 0.20; 2.5 & 0.18; 2.5 & 0.17; 2.5 & 0.17; 2.5 \\
+\hline
+\end{tabular}
+\end{center}
+\end{table*}
+Rezultati testiranja vidljivi su u tablici \ref{tab:interest_confusion_svm},
+a F1 mjera iznosi
+\begin{equation}
+\label{eq:f1_svm_interest}
+F1_{SVM(interest)} = 0.88
+\end{equation}
+
+Ako se ovaj rezultat usporedi s AMBK-om, vidljivo je kako je SVM klasifikator za riječ \emph{interest} podosta uspješniji od AMBK.
+Također ako se pomnije promotri tablica \ref{tab:interest_validation_svm}, vidljivo je kako se dobre veličine
+prozora konteksta nalaze oko veličine $(5,4)$, 
+kako se udaljavamo od te veličine u bilo kojem smjeru, pogreška klasifikacija raste.
+Upravo prozor konteksta s veličinom $(5, 4)$ daje najmanju pogrešku,
+naime očito takav prozor konteksta izlučuje najbolje značajke.
+Naime manji prozori konteksta (manje vrijednosti varijabli $l$ i $r$) 
+ne zahvaćaju karakteristične riječi (one koje rade dobro diskriminiraju između različitih semantičkih značenja) u dovoljnoj mjeri.
+Veliki prozor konteksta pak zahvaća i riječi koje ne pridonose diskriminaciji
+različitih semantičkih značenja riječi, tj.~zahvaća previše šuma, pa je
+pogreška klasifikacije velika, što potvrđuju i rezultati iz tablice \ref{tab:interest_validation_svm}.
+
+
+\begin{table}[!hbtp]
+\caption{Matrica zabune SVM-a za riječ \emph{interest}}
+\label{tab:interest_confusion_svm}
+\begin{center}
+\begin{tabular}{|cccccc|c|}
+\hline
+$I_1$ & $I_2$ & $I_3$ & $I_4$ & $I_5$ & $I_6$ &  \\
+\hline
+ 164 & 0 &  1 & 12 & 27 &  7 & $I_1$  \\
+   0 & 0 &  0 &  5 &  0 &  0 & $I_2$  \\
+   6 & 0 & 18 &  7 &  3 &  1 & $I_3$  \\
+  13 & 0 & 3  & 63 & 11 &  6 & $I_4$  \\
+  16 & 0 & 0  & 4  &204 &  4 & $I_5$  \\
+   7 & 0 & 0  & 2  &  3 & 598  &$I_6$  \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\subsubsection{Rezultati za riječ \emph{line}} 
+Na uravnoteženom skupu uzoraka za riječ \emph{line} proveden
+je isti postupak kao i za riječ \emph{interest}. 
+Rezultati validacije SVM-a vidljivi su u tablici \ref{tab:line_validation_svm}.
+Baš kao i za riječ \emph{interest}, nakon validacije odabire se
+SVM s onim parametrima koji daju najmanju pogrešku na skupu za validaciju.
+Upravo SVM s prozorom konteksta $(4,50)$ i parametrom $C = 0.25$ daje 
+najmanju pogrešku na skupu validacije.
+Za takav SVM nakon testiranja na skupu za testiranje, dobivena
+je matrica zabune prikazana u tablici \ref{tab:line_confusion_svm},
+iz koje se može izračunati F1 mjera:
+\begin{equation}
+\label{eq:f1_svm_line}
+F1_{SVM(line)} = 0.84
+\end{equation}
+
+\begin{table}[!hbtp]
+\caption{Matrica zabune SVM-a za riječ \emph{line}}
+\label{tab:line_confusion_svm}
+\begin{center}
+\begin{tabular}{|ccc|c|}
+\hline
+$L_1$ & $L_2$ & $L_3$ &  \\
+\hline
+ 170  & 10  & 29 & $L_1$ \\
+  15  & 159  & 9 & $L_2$ \\
+  23  & 0  & 135 & $L_3$ \\
+\hline
 \end{tabular}
 \end{center}
 \end{table}
 
-\subsection{Široke tablice}
-
-Tablica \ref{tab:siroka-tablica} je primjer široke tablice koja ide
-preko oba stupca. Slično se mogu napraviti i slike koje idu preko oba
-stupca.
-
-\begin{table*}
-\caption{Opis široke tablice.}
-\label{tab:siroka-tablica}
-\begin{center}
-\begin{tabular}{llr}
-\toprule
-Zaglavlje1 & Zaglavlje2 & Zaglavlje 3\\
-\midrule
-A & Neki vrlo dugačak tekst koji je širi od jednog stupca & $128$\\
-B & Neki vrlo dugačak tekst koji je širi od jednog stupca & $3123$\\
-C & Neki vrlo dugačak tekst koji je širi od jednog stupca & $-32$\\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{table*}
-
-\section{Matematičke formule}
-
-Matematičke formule koje se pojavljuju unutar rečenice pišite unutar
-tzv.~\emph{inline} matematičke okoline: $2+3$, $\sqrt{16}$,
-$h(x)=\mathbf{1}(\theta_1 x_1 + \theta_0>0)$. Veće formule pišite u
-tzv.~\emph{displayed} matematičkoj okolini:
-
-\[
-b^{(i)}_k = \begin{cases}
-1 & \text{ako 
-    $k = \text{argmin}_j \| \mathbf{x}^{(i)} - \mathbf{\mu}_j \|$}\\
-0 & \text{inače}
-\end{cases}
-\]
-
-Matematičke izraze na koje se kasnije pozivate pišite unutar
-okoline \emph{equation}:
-
-\begin{equation}\label{eq:kmeans-error}
-J = \sum_{i=1}^N \sum_{k=1}^K 
-b^{(i)}_k \| \mathbf{x}^{(i)} - \mathbf{\mu}_k \|^2
-\end{equation}
-
-Sada se možete pozvati na \eqref{eq:kmeans-error}. Ako se
-odlomak nastavlja nakon formule
-
-\begin{equation}
-f(x) = x^2 + \varepsilon
-\end{equation}
-
-\noindent kao ovaj ovdje, onda obavezno na početku nastavka odlumka
-koristite naredbu \emph{noindent} kako biste spriječili uvlačenje
-retka na početku odlomka.
-
-Ako se matematička formula prostire kroz više redaka, koristite
-naredbu \emph{align}.
-\begin{align}
-\mathbb{E}(X Y) &= \mathbb{E}(X)\, \mathbb{E}(Y)\nonumber\\
-\mathit{Var}(X+Y) &= \mathit{Var}(X) + \mathit{Var}(Y)\nonumber
-\end{align}
-
-Matematičke nazive koji se sastoje od više slova trebate pisati unutar
-narebe \emph{mathit}, u suprotnom \LaTeX između slova umeće razmak kao
-da je riječ o množenju. Usporedite
-$\mathit{Consistent}(h,\mathcal{D})$ i\\
-$Consistent(h,\mathcal{D})$.
-
-Ako vam treba neki matematički simbol, znate kako izgleda, ali ne znate
-kako se zove odgovarajuća naredba u \LaTeX-u, iskušajte
-\emph{Detexify}.\footnote{\texttt{http://detexify.kirelabs.org/}}
-(Usput rečeno, riječ je o klasifikatoru k-NN pisanome u Haskellu.)
-
-\section{Pseudok\^od i programski k\^od}
-
-Za pseudok\^od je nabolje koristiti paket \emph{Algorithm2e}.
-Alternativno, a posebice za programski k\^od, možete koristiti pakete
-\emph{listings} ili \emph{fancyvrb}. Navođenje programskog k\^oda
-izbjegnite, osim ako za to nemate valjan razlog.
-
-\section{Navodi literature}
-
-Navodi literature pišu se u zagradi s prezimenom autora prvog autora
-te godinom izdanja \citep{chomsky-73}.  Više navoda se pišu jedan iza
-drugoga, u zajedničkoj zagradi i međusobno odvojeni točka-zarezom
-\citep{chomsky-73,chave-64,feigl-58}. Navodi se najčešće pišu na kraju
-rečenice, a svakako prije interpunkcijskog znaka za kraj rečenice.
-
-Ako rad ima više od dva autora, piše se ime samo prvog autora, nakon
-čega slijedi kratica \emph{at al}, koja znači \emph{et alia} tj.~i
-drugi \citep{johnson-etc}. Ako su samo dva autora, pišu se prezimena
-oba autora \citep{johnson-howells}.
-
-Ako je ime autora ugrađeno u rečenicu, onda se ime autora piše izvan
-zagrada, a u zagrade ide samo godina izdanja.  Npr.~\citet{chomsky-73}
-je predložio da\dots''. Razlika je dakle u tome referencirate li se na
-s\^am rad ili na autora koji je napisao taj rad.
-
-Popis literature dan je u abecednom poretku na kraju članka.  Oblik
-navoda ovisi o vrsti bibliografske jedinice: konferencijski radovi
-\citep{chave-64}, knjige \citep{butcher-81}, članci u časopisu
-\citep{howells-51}, doktorske disertacije \citep{croft-78} i poglavlja
-knjige \citep{feigl-58}. 
-
-Sve ovo dobivate automatski ako koristite BibTeX. U datoteku
-\texttt{su2010.bbl} upišite navode literature, a zatim se na njih
-pozivajte putem njihovih simboličkih oznaka.
-
-\section{Tuđice}
-
-Umjesto tuđica (a to će biti uglavnom engleske riječi) trebate pisati
-hrvatski prijevod, a tuđice trebate navesti u kurzivu u zagradi. Na
-primjer: stablo odlučivanja \engl{decision tree}. Nemojte pisati
-velika početna slova engleskog naziva, osim ako se ne radi o vlastitom
-imenu. Ako želite odmah uvesti i kraticu, dodajte i nju u zagradu. Na
-primjer: umjetna neuronska mreža \engla{artificial neural
-network}{ANN}. Iznimno, ako za neki engleski naziv nema odgovarajućeg
-prijevoda, možete koristiti engleski naziv, ali onda obavezno uvijek u
-kurzivu.
-
-Nikada, baš nikada, engleske nazive ne koristite u naslovima
-odjeljaka.
-
-\section{Dodatne tipografske napomene}
-
-Slijede neke dodatne tipografske napomene.
-
-\subsection{Naglašavanje}
-
-Nipošto nemojte koristiti \textbf{masna slova}.  Ako baš želite nešto
-naglasiti, koristite \emph{kurziv}.
-
-\subsection{Zagrade}
-
-Ispred zagrade obavezno se piše bjelina (to nije poziv funkcije), a
-također i iza zagrade, osim, naravno, ako iza zagrade slijedi
-interpunkcijski znak.
-
-\subsection{Navodnici}
-
-Navodnici se pišu ``ovako'' (različiti su lijevi i desni navodnici), a
-ne "ovako" niti `ovako' niti nešto treće. Doduše, navodnici se rijetko
-koriste u znanstvenom tekstu.
-
-\subsection{Trotočje}
-
-Trotočje (tzv.~elipsa) ``\dots'' nema što tražiti u znanstvenom
-tekstu. Koristite kratice ``itd.''~i ``i sl.''. U okviru matematičkog
-teksta, naravno, tri točke imaju drugo značenje (skraćen prikaz niza)
-i koristite ih ako vam trebaju.
-
-\subsection{Razmaci nakon kratica}
-
-Nakon kratice koja završava točkom, a koja nije kraj rečenice, stavite
-tildu (\verb.~.) umjesto razmaka. U suprotnom će \LaTeX\ misliti da se
-radi o kraju rečenice i stavit će nešto veći razmak. Pogledajte
-razliku između \\
-\noindent ``tzv.~elipsa'' i \\
-``tzv. elipsa''\\ 
-\noindent (mala je, ali postoji). Tilda ujedno sprječava rastavljanje
-rečenice na tom mjestu.
-
-\subsection{Brojke}
-
-Brojke manje od 10 raspišite riječima, osim ako se radi vrijednostima
-parametara, rezultatima ili sl. Dakle, umjesto ``u 3 eksperimenta'',
-pišite ``u tri eksperimenta''.
-
-\subsection{Matematički simboli}
-
-Sve matematičke simbole, makar bili jednoslovni, pišite unutar
-matematičke okoline: $N$ umjesto N, $k$ umjesto k, itd. Nikada ne
-započinjite rečenicu matematičkim simbolom. Umjesto toga rečenicu
-započnite odgovarajućom imenicom.  Npr.~umjesto ``$N$ je broj
-koji\dots'' napišite ``Vrijednost $N$ je broj koji\dots''.
-
-\subsection{Crte i spojnice}
-
-Između dijelova polusloženica koristite pišete jednu crticu odnosno
-spojnicu: aritmetičko-logička operacija, EM-algoritam, VC-dimenzija,
-web-stranica.  Između dijelova umetnute rečenice, piše se crta, koja
-se u \LaTeX-u dobiva pisanjem dviju crtica: ``Prvi eksperiment je
-pokazao -- premda ne posve uvjerljivo -- da točnost klasifikatora ne
-ovisi samo o \dots''.
-
-\subsection{Fusnote}
-
-Ovo je primjer fusnote.\footnote{Ovo je primjer teksta fusnote.}
-Oznaku fusnote stavljajte nakon interpunkcijskog znaka, ako se odnosi
-na rečenicu ili na zadnju riječ, inače je stavite nakon riječi na koju
-se odnosi. Fusnote pokušajte izbjegavati, osim za poveznice
-(v.~dolje).
-
-\subsection{Poveznice}
-
-Poveznice na web-stranice pišite neproporcionalnim fontom:
-\texttt{ktlab.fer.hr}. Svakako pokušajte sve poveznice smjestiti u
-fusnote;\footnote{\texttt{ktlab.fer.hr}} tekst u kojem se pojavljuju
-poveznice izgleda loše zato jer su poveznice često predugačke.
-
-\subsection{Natuknice}
-
-Natuknice međusobno odvojite točka-zarezom:
-
-\begin{enumerate}
-\item Prva natuknica,
-\item Druga natuknica,
-\item Zadnju natuknicu završite točkom.
-\end{enumerate}
-
-Ako neka od natuknica u sebi već sadrži zarez, onda sve natuknice
-završite točka zarezom, osim zadnje:
-
-\begin{itemize}
-\item Prva natuknica, koja u sebi ima zarez;
-\item Druga natuknica;
-\item Zadnja natuknica.
-\end{itemize}
-
-Natuknice koristite umjereno (zbog prostora).
-
-\subsection{Siročad}
-
-Po svaku cijenu nastojte izbjeći odlomke kod kojih u zadnjem retku
-visi samo jedna riječ, kao što je slučaj s ovim odlomkom. To lako
-možete riješiti preoblikovanjem nekih rečenica, no taj posao ostavite
-za kraj (može i nakon recenzije).
-
-Isto vrijedi i za posljednje retke odlomaka ili (još gore) odsječaka
-koji usamljeno prelaze na iduću stranicu.
+Valja primijetiti kako su F1 mjere za riječ \emph{interest} (\ref{eq:f1_svm_interest}) i \emph{line} 
+(\ref{eq:f1_svm_line}) slične, ne postoji velika razlika kao u slučaju AMBK-a.
+Dakle SVM bi bio bolji izbor za razrješavanje vižeznačnosti riječi jer
+nije toliko osjetljiv na neuravnotežene i uravnotežene skupove uzoraka
+kao što je AMBK.
+Također zamjećuje se manja uspješnost SVM-a na uravnoteženom
+skupu uzoraka (\emph{line}) u odnosu na neuravnoteženi (\emph{interest}), 
+dok je kod AMBK-a obrnuti slučaj.
 
 \section{Zaključak}
+Rad rješava problem razrješavanja višeznačnih riječi na postupcima
+strojno učenja. Izneseni su rezultati za SVM postupak i za
+ansambl naivnih Bayesovih klasifikatora (ANBK) gdje se odluka donosi
+glasanjem devet Bayesovih klasikatora.
 
-Zaključak je posljednji numerirani odsječak rada. Zaključak bi trebao
-biti veličine do najviše pola visine stupca. Zaključak je dobro
-razdijeliti u više odlomaka (npr.~dva ili tri).
+Za ovakav nenormaliziran skup podataka, rezultati pokazuju
+veću uspješnost SVM algoritma. Eksperimenti su pokazali kako povezivanje više 
+NB klasifikatora u ansambl (glasački stroj) ne poboljšava nužno uspješnost klasifikacije.
+ANBK se pokazao
+izrazito uspješnim na uravnoteženom skupu podataka, dok
+na neuravnoteženom skupu podataka daje loše rezultate (velika
+pogreška klasifikacije).
+Također proveden je eksperiment
+koji pronalazi najoptimalniji prozor konteksta za izlučivanje
+značajki iz skupa uzoraka. Zaključeno je kako prozor konteksta ne bi trebao
+biti niti prevelik, niti premali; svakako ne bi trebao obuhvaćati više od 15 riječi, 
+u suprotnom uspješnost klasifikacije opada.
 
-%VAŽNO: Privremeno uklonite zahvalu kada šaljete rad na recenziju.
-\section*{Zahvale}
-
-Po želji možete prije popisa literature uključiti ovaj odjeljak i
-zahvaliti onima koji su vam na bilo koji način pomogli u izradi rada,
-a nisu autori rada. Ako nemate kome zahvaliti, obrišite ovaj odjeljak.
+U daljnjim istraživanjima svakako bi valjalo provjeriti kako se ANBK i SVM ponašaju na
+normaliziranom skupu uzoraka. Naime takav skup bi dao veće težište razlučivim značajkama,
+istovremeno bi se smanjio ukupan broj značajki, a time i šum.
 
 \bibliographystyle{su2010}
 \bibliography{su2010} 
