@@ -85,7 +85,7 @@ Primjerice leksički izraz \emph{jaguar} ima više semantičkih značenja
 britanska glazbena grupa, parfem), gdje se semantičko značenje riječi \emph{jaguar}
 doznaje iz konteksta. Dakle svaka riječ u pisanom tekstu jedinstveno je označena 
 leksičkim izrazom i semantičkim značenjem. Upravo iz razloga što odnos 
-leksičkog izraza riječi i semantičkog značenja riječi nije injektivan, 
+leksičkog izraza i semantičkog značenja nije injektivan, 
 automatizirani postupci kao što je npr.~pretraživanje teksta ili
 postavljanje upita nad bazom podataka i sl.~vrlo često korisnicima 
 daju neželjene rezultate. Danas lingvistička znanost i računarska znanost 
@@ -95,12 +95,19 @@ rješavale navedeni problem.
 Tehnike strojnog učenja pružaju dovoljno dobru podlogu za realizaciju sustava
 koji bi bio sposoban razriješiti višeznačnosti riječi, tj.~identificirati pravo
 značenje riječi ovisno o okolnom kontekstu. Stoga su u ovom radu istraženi postupci
-strojnog učenja za razrješavanje višeznačnosti riječi.
+strojnog učenja za razrješavanje višeznačnosti riječi, a korišteni postupci su:
+stroj s potpornim vektorima (SVM) i ansambl naivnih Bayesovih klasifikatora (ANBK).
 
 Slijedeći problem koji se pojavljuje je kako izlučiti značajke iz konteksta.
 U većini slučajeva za značajke se uzima $n$ riječi koje se nalaze u neposrednoj blizini oko višeznačne riječi, gdje je $n \in N$ neka fiksna konstanta. Pogrešno odabran $n$ može pogoršati uspješnost klasifikacije, također intuitivno se može naslutiti kako nije svejedno koliko od tih $n$ riječi se pojavljuje u tekstu s lijeve strane višeznačne riječi, a koliko pak s desne strane.
 Upravo ovaj rad nastoji ustanoviti te zavisnosti, te zajedno s priloženim rezultatima provedenih eksperimenata iznosi zaključke kako odabrati kvalitetne značajke.
 
+U idućem poglavlju dan je pregled srodnih radova. Treće poglavlje opisuje bazu
+podataka, ekstrahiranje značajki te reprezentiranje uzoraka. Četvrto pogljavlje
+daje uvid u provođenja eksperimenta, s kratkim opisom korištenih postupaka
+strojnog učenja zajedno s objašnjenjem postupka provođenja validacije i testiranja. U petom
+poglavlju izneseni su rezultati eksperimenata te se raspravlja o dobivenim rezultatima.
+U zadnjem poglavlju izneseni su zaključci i smjernice za daljnji rad.
 \section{Srodni radovi}
 Čitajući dostupne radove privukle su nas metode koje
 pokušavaju pristupiti tom problemu nama poznatim metodama,
@@ -121,10 +128,7 @@ pokazao se vrlo robusnim rješenjem za ovaj problem.
 Njegova ideja temelji se na izradi više klasifikatora s različitim
 širinama lijevog i desnog konteksta,
 koji bi se koristili za klasifikaciju po sistemu nadglašavanja.
-Točnost klasifikacije ovakvog pristupa vrlo je bliska veličini od 80\%.
-Zbog toga smo se mi odlučili za takav pristup, kojeg karakterizira
-relativna jednostavnost i vrlo intuitivno oblikovanje zadanog problema
-pomoću naivnog Bayesovog klasifikatora.
+Točnost klasifikacije ovakvog pristupa vrlo je bliska postotku od 80\%.
 
 \section{Opis uzoraka}
 Označavanje vlastite baze podataka s višeznačnim riječima izuzetno je
@@ -149,70 +153,72 @@ Ova metoda reprezentiranja skupa značajki,
 opisana u \citep{pedersen}, varijanta je metode \glqq vreća riječi" \engl{bag-of-words} 
 prvi put opisane u \citep{gale-etc}, a razlikuje se po tome što razlikuje 
 riječi koje se nalazi lijevo i desno od višeznačne riječi. \mbox{Slika \ref{window_of_context}}
-opisuje izlučivanje značajki s definiranim prozorom konteksta $(5,3)$.
+opisuje izlučivanje značajki s definiranim prozorom konteksta $(5,3)$. Naime sve značajke koje
+se nalaze unutar tog prozora imati će vrijednost jedan, dok će ostale poprimiti vrijednost nula.
 
 \begin{figure}[!hbtp]
 {\small \texttt{     Forward supplies can largely be stored in these same areas, and land forces are best held in reserve on \fbox{our own soil. Drawing a} \emph{line} \fbox{between military aid} and military involvement may be harder, but it can be done if we keep the distinction clearly in mind.}}
 \caption{Primjer uzorka višeznačne riječi \emph{line} s prozorom konteksta $(5, 3)$.\label{window_of_context}}
 \end{figure}
 
-Baza podataka sadrži 2368 instanci za riječ \emph{interest} i 4148 instanci za riječ \emph{line}, 
-pri čemu svaka instanca sadrži nekoliko rečenica koje predstavljaju kontekst višeznačne riječi,
-iz kojih je zatim moguće izlučiti potrebne značajke. Također svaka instanca sadrži atribut koji 
-definira semantičko značenje višeznačne riječi.
+Baza podataka sadrži 2368 primjera za riječ \emph{interest} i 4148 primjera za riječ \emph{line}.
+Primjer je u biti tekst u kojem se nalazi višeznačna riječ, taj tekst smatramo
+kontekstom višeznačne riječi. Također svaki primjer, uz tekst, sadrži i atribut koji 
+definira semantičko značenje višeznačne riječi u primjeru.
 
-Nad bazom podataka napravljena je predobrada podataka tj.~svi zapisi pretvoreni su u XML format
-u obliku kao što je prikazano na slici \ref{fig:instance_example}, gdje je \texttt{<tag key="division"/>}
-oznaka koja zamjenjuje višeznačnu riječ \emph{line} i označuje semantičko značenje riječi u tom kontekstu.
+%%Nad bazom podataka napravljena je predobrada podataka tj.~svi zapisi pretvoreni su u XML format
+%%u obliku kao što je prikazano na slici \ref{fig:instance_example}, gdje je \texttt{<tag key="division"/>}
+%%oznaka koja zamjenjuje višeznačnu riječ \emph{line} i označuje semantičko značenje riječi u tom %%kontekstu.
 
-\begin{figure}[!hbtp]
-{\small \texttt{
-<sentence>
-Forward supplies can largely be stored in these same areas , and land forces are best held in reserve on our own soil. Drawing a  <tag key="division"/>  between military aid and military involvement may be harder , but it can be done if we keep the distinction clearly in mind.
-</sentence>}}
-\caption{Primjer zapisa instance za višeznačnu riječ \emph{line}
-\label{fig:instance_example}}
-\end{figure}
+%%\begin{figure}[!hbtp]
+%%{\small \texttt{
+%%<sentence>
+%%Forward supplies can largely be stored in these same areas , and land forces are best held in reserve %%on our own soil. Drawing a  <tag key="division"/>  between military aid and military involvement may be %%harder , but it can be done if we keep the distinction clearly in mind.
+%%</sentence>}}
+%%\caption{Primjer zapisa instance za višeznačnu riječ \emph{line}
+%%\label{fig:instance_example}}
+%\end{figure}
 
 Riječ \emph{interest} ima šest različitih semantičkih značenja (vidi tablicu \ref{tab:interest_distribution}), baš kao i riječ \emph{line},
-međutim za riječ \emph{line} izdvojene su instance samo za tri semantička značenja
-(vidi tablicu \ref{tab:line_distribution}). Naime distribucija semantičkih značenja u 
+međutim za riječ \emph{line} izdvojeni su samo oni primjeri kod kojih višeznačna riječ ima
+jedno od značenja opisanih u tablici \ref{tab:line_distribution}.
+Naime distribucija primjera, po semantičkim značenjima višeznačne riječi, u 
 originalnoj bazi podataka za \emph{interest} i \emph{line} je vrlo neujednačen,
-stoga je stvoren umjetno uravnotežen skup instanci za \emph{line} kako
-bi mogli istražiti koliko neke metode strojnog učenja
-kvalitetno klasificiraju na neuravnoteženom skupu podataka, 
+stoga je stvoren umjetno uravnotežen skup primjera za \emph{line} kako
+bi mogli istražiti koliko koja metoda strojnog učenja
+kvalitetno klasificira na neuravnoteženom skupu podataka, 
 a koliko na uravnoteženom skupu podataka.
 
 \begin{table}[!hbtp]
-\caption{Distribucija semantičkih značenja za riječ \emph{interest}}
+\caption{Distribucija primjera po semantičkim značenjima za riječ \emph{interest}}
 \label{tab:interest_distribution}
 \begin{center}
-\begin{tabular}{ll}
+\begin{tabular}{lll}
 \toprule
-Semantičko značenje & Broj instanci \\
+& Semantičko značenje & Broj primjera \\
 \midrule
-kamate 											& 1252\\
-udjel dionica u tvrtci  						& 500\\
-interes  	 									& 361\\
-prednost ili korist 							& 178\\
-pokazati zainteresiranost						& 66\\
-prouzročiti zainteresiranost drugih 			& 11\\
+$I_1$ & interes  	 									& 361\\
+$I_2$ & prouzročiti zainteresiranost drugih 			& 11\\
+$I_3$ & pokazati zainteresiranost						& 66\\
+$I_4$ & prednost ili korist 							& 178\\
+$I_5$ & udjel dionica u tvrtci  						& 500\\
+$I_6$ & kamate 											& 1252\\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{table}
 
 \begin{table}[!hbtp]
-\caption{Distribucija semantičkih značenja za riječ \emph{line}}
+\caption{Distribucija primjera po semantičkim značenjima za riječ \emph{line}}
 \label{tab:line_distribution}
 \begin{center}
-\begin{tabular}{ll}
+\begin{tabular}{lll}
 \toprule
-Semantičko značenje & Broj instanci \\
+& Semantičko značenje & Broj primjera \\
 \midrule
-tanak oblik, crta							& 373\\
-umjetna podjela, granica 					& 374\\
-formacija ljudi ili stvari					& 349\\
+$L_1$ & tanak oblik, crta							& 373\\
+$L_2$ & umjetna podjela, granica 					& 374\\
+$L_3$ & formacija ljudi ili stvari					& 349\\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -263,16 +269,15 @@ $l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
 \end{table*}
 
 Kako je cilj ovog rada ustanoviti koji prozor konteksta $(l,r)$ odabrati
-ovisno o algoritmu strojnog učenja (razmatrani su k-NN, SVM, skup Bayeskovih klasfikatora)
+ovisno o algoritmu strojnog učenja (razmatrani su SVM i ANBK)
 kako bi klasifikacija bila što uspješnija, stvoreno je 81 skupova uzoraka. Svaki
 skup uzoraka dobiven je drugačijim izlučivanjem značajki iz skupa podataka,
 pri čemu se skupovi uzoraka razlikuju po veličini prozora konteksta $(l, r)$,
 odnosno po kombinaciji koliko je riječi izlučeno s lijeve strane višeznačne riječi (varijabla $l$ u definiciji prozora konteksta), a koliko s desne strane višeznačne riječi (varijabla $r$ u definiciji prozora konteksta). Veličina lijevog prozora konteksta i desnog prozora konteksta, tj.~varijable
-$l$ i $r$ poprimaju vrijednosti iz skupa \{0, 1, 2, 3, 4, 5, 10, 25, 50\}. Ne postoji posebni
+$l$ i $r$ poprimaju vrijednosti iz skupa \{0, 1, 2, 3, 4, 5, 10, 25, 50\}. Ne postoji poseban
 razlog zašto su odabrane baš te vrijednosti, koje mogu poprimiti varijable $l$ i $r$,
 već se slijedila preporuka iz rada \citep{pedersen}, gdje su korištene iste vrijednosti.
-Nad svakim od tih skupova uzoraka provedeni su algoritmi: k-NN, SVM, naivni-Bayesov
-klasifikator, te su izračunate F1 mjere za svaku kombinaciju \emph{skup uzoraka - algoritam}.
+Nad svakim od tih skupova uzoraka provedeni su algoritmi SVM i naivni Bayesov (NB) klasifikator, te su izračunate F1 mjere za svaku kombinaciju \emph{skup uzoraka - algoritam}.
 Tablica \ref{tab:interest_feature_set} i tablica \ref{tab:line_feature_set} prikazuju ukupan broj izlučenih značajki ovisno o kombinaciju $(l,r)$, tj.~ovisno o skupu uzoraka. Primjećuje
 se kako skupovi uzoraka koji su dobiveni izlučivanjem s većim prozorom konteksta imaju
 više značajki, što je i očekivano. Naime veći prozor konteksta pohvatati će više 
@@ -288,7 +293,7 @@ zatim klasificira u ono semantičko značenje (razred) koje ima najviše glasova
 Odluka koji će NB klasifikatori ući u ANBK donosi se ovisno o rezultatima pojedinačnih
 NB klasifikatora na skupu za validaciju.
 Za svaki prozor konteksta odgovoran je jedan
-NB klasifikator, što čini ukupno 81 NB klasifikator. 
+NB klasifikator, što čini ukupno 81 NB klasifikatora. 
 Nakon provedene validacije odabire se najuspješniji NB klasifikatora
 iz svake kategorije, koji zatim ulazi u ANBK. 
 Razlikujemo devet kategorija ovisno u veličini prozora konteksta.
@@ -303,7 +308,7 @@ pristupa se postupku testiranja ansambla na skupu za testiranje.
 \subsection{Stroj s potpornim vektorima (SVM)}
 U ovom radu koristi se LibSVM implementacija \mbox{SVM-a}, odnosno C-SVM s linearnom
 jezgrenom funkcijom. 
-\mbox{C-SVM} je SVM s mekim marginama i ima jedan parametar (stupanj koštanja C).
+\mbox{C-SVM} je SVM s mekim marginama i ima jedan parametar (cijena koštanja $C$).
 Takav SVM omogućuje provlačenje hiperravnine čak i ako problem
 nije linearno odvojiv, u takvim slučajevima parametar C određuje koliko će
 se kaznati svaki uzorak koji se nalazi s pogrešne strane hiperravnine.
@@ -331,12 +336,12 @@ Prije podijele popola, podskup je nasumično ispremiješan, s
 namjerom sprječavanja nepravilne distribucije uzoraka u skupu za validaciju
 ili skupu za testiranje. Validacija se vrši na dobivenom skupu za validaciju, 
 dok skup za testiranje ostaje neaktivan. Nakon završene validacije
-slijedi slijedeća iteracija unakrsne provjere, tj. podskup za validaciju
+slijedi slijedeća iteracija unakrsne provjere, tj.~podskup za validaciju
 i testiranje ubacuje se u podskupove za učenje, a jedan od 4 prijašnja podskupa
 za učenje postaje skup za validaciju i testiranje. Takvih iterativnih koraka ima ukupno
 pet. Valja naglasiti kako se testiranje ne provodi odmah nakon validacije u svakom
-iterativnom koraku unakrsne provjere, već se testiranja provodi nakon što je validacija
-provedena nad svakim od pet mogućih skupova za validaciju, nakon čega se izračunavaju
+iterativnom koraku unakrsne provjere, već se testiranje provodi nakon što je validacija
+provedena nad svakim od pet mogućih skupova za validaciju, nakon čega se računaju
 optimalni parametri modela, te se tek nakon toga vrši testiranje. 
 
 \begin{lstlisting}[label=lst:Convolution1D,caption= Pseudok\^od implementirane unakrsne provjere]
@@ -374,19 +379,19 @@ Ovakav model učenja, validacije i testiranja odabran je s razlogom, naime
 Naime ako bi se testiranje vršilo odmah nakon validacije u svakom iterativnom
 koraku unakrsne provjere, prilikom testiranja dobiveni rezultati ne bi bili
 potpuno objektivni, jer bi rezultati testiranja u tom koraku ovisili
-o trenutačnom skupu za validaciju. TODO (srediti ovo obavezno)
+o trenutačnom skupu za validaciju. %TODO (srediti ovo obavezno)
 
 \section{Rezultati}
-\subsection{Klasifikacija pomoću skupa naivnih Bayesovih klasifikatora}
+\subsection{Klasifikacija pomoću ansambla naivnih Bayesovih klasifikatora}
 \subsubsection{Rezultati za riječ \emph{interest}} 
 Nakon provedene validacije odabire se devet najtočnijih klasifikatora iz
-svakog raspona kako bi se dobio ansambl Bayesovih klasifikatora. 
-U tablici \ref{tab:interest_validation_bayes} prikazani su rezultati (F1 mjere)
-validacije, naivni Bayesovi klasifikatori koji su uključeni u ansambl su oni
+svake kategorije kako bi se dobio ansambl naivnih Bayesovih klasifikatora. 
+U tablici \ref{tab:interest_validation_bayes} prikazani su rezultati
+validacije (F1 mjere), naivni Bayesovi klasifikatori koji su uključeni u ansambl su oni
 s prozorom konteksta: $(1,1)$, $(3,1)$, $(10,1)$,
 $(1,3)$, $(4,3)$, $(10,3)$, $(2,25)$, $(5,10)$, $(10,25)$.
 
-Nakon provedenog testiranja F1 mjera ansambl naivnih Bayesovih klasifikatora
+Nakon provedenog testiranja F1 mjera ansambla naivnih Bayesovih klasifikatora
 iznosi
 \begin{equation}
 \label{eq:F1_ansambl}
@@ -458,7 +463,7 @@ između razreda u skupu uzoraka.
 Ovakav postupak za riječ \emph{interest} proveden je i u radu \citep{pedersen}, pri
 čemu je korištena identična metoda i identični način validacije i testiranja. 
 U tom radu točnost\footnote{Kod klasifikacije u više od dvije klasa, točnost je jednaka F1 mjeri.} klasifikacije iznosi $0.88$. 
-Razlog, zbog čega je naš klasifikator neuspješniji, u odnosu na spomenuti rad, nije nam 
+Razlog zbog čega je naš klasifikator neuspješniji, u odnosu na spomenuti rad, nije nam 
 potpuno poznat. Pretpostavljamo da je razlog u različitom pristupu zaglađivanja
 apriornih vjerojatnosti s vjerojatnošću nula, tj.~u različitim
 implementacijama Bayesovog klasifikatora (u ovom radu korištena
@@ -519,7 +524,7 @@ $L_1$ & $L_2$ & $L_3$ &  \\
 \subsubsection{Rezultati za riječ \emph{interest}}
 U tablici \ref{tab:interest_validation_svm} nalaze se rezultati validacije.
 Za svaki prozor konteksta $(i,j)$ validacijom je izračunat parametar C koji
-daje najmanju pogrešku na skupu za validaciju. Onaj SVM kod kojeg kombinacija veličine prozora konteksta i parametra C daje najmanju pogrešku na skupu za validaciju se odabire za testiranje.
+daje najmanju pogrešku na skupu za validaciju. Onaj SVM kod kojeg kombinacija veličine prozora konteksta i parametra C daje najmanju pogrešku na skupu za validaciju, odabire se za testiranje.
 U našem slučaju, kao što se može očitati iz tablice \ref{tab:interest_validation_svm}, to je SVM s prozorom konteksta (5,4) i parametrom $C=0.75$.
 \begin{table*}[!hbtp]
 \caption{Pogreške i vrijednosti parametara C nakon provedene validacije SVM-a za riječ \emph{interest}}
@@ -575,7 +580,7 @@ Također ako se pomnije promotri tablica \ref{tab:interest_validation_svm}, vidl
 prozora konteksta nalaze oko veličine $(5,4)$, 
 kako se udaljavamo od te veličine u bilo kojem smjeru, pogreška klasifikacija raste.
 Upravo prozor konteksta s veličinom $(5, 4)$ daje najmanju pogrešku,
-naime očito takav prozor konteksta izlučuje najbolje značajke.
+očito takav prozor konteksta izlučuje najbolje značajke.
 Naime manji prozori konteksta (manje vrijednosti varijabli $l$ i $r$) 
 ne zahvaćaju karakteristične riječi (one koje rade dobro diskriminiraju između različitih semantičkih značenja) u dovoljnoj mjeri.
 Veliki prozor konteksta pak zahvaća i riječi koje ne pridonose diskriminaciji
@@ -644,7 +649,7 @@ dok je kod ANBK-a obrnuti slučaj.
 
 \section{Zaključak}
 Rad rješava problem razrješavanja višeznačnih riječi na postupcima
-strojno učenja. Izneseni su rezultati za SVM postupak i za
+strojnog učenja. Izneseni su rezultati za SVM postupak i za
 ansambl naivnih Bayesovih klasifikatora (ANBK) gdje se odluka donosi
 glasanjem devet Bayesovih klasikatora.
 
@@ -658,7 +663,7 @@ pogreška klasifikacije).
 Također proveden je eksperiment
 koji pronalazi najoptimalniji prozor konteksta za izlučivanje
 značajki iz skupa uzoraka. Zaključeno je kako prozor konteksta ne bi trebao
-biti niti prevelik, niti premali; svakako ne bi trebao obuhvaćati više od 15 riječi, 
+biti niti prevelik, niti premali; svakako ne bi trebao obuhvaćati više od 15-ak riječi, 
 u suprotnom uspješnost klasifikacije opada.
 
 U daljnjim istraživanjima svakako bi valjalo provjeriti kako se ANBK i SVM ponašaju na
