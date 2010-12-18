@@ -77,7 +77,7 @@ dobra točnost klasifikacije.}
 
 \section{Uvod}
 
-Riječ, kao sastavnica svakog jezika, opisana je leksičkim izrazom i semantičkim značenjem.
+Riječ kao sastavnica svakog jezika, opisana je leksičkim izrazom i semantičkim značenjem.
 Jedan leksički izraz može imati više semantičkih značenja, pri čemu okolni kontekst
 sugerira semantičko značenje leksičkog izraza. 
 Primjerice leksički izraz \emph{jaguar} ima više semantičkih značenja
@@ -101,6 +101,31 @@ Slijedeći problem koji se pojavljuje je kako izlučiti značajke iz konteksta.
 U većini slučajeva za značajke se uzima $n$ riječi koje se nalaze u neposrednoj blizini oko višeznačne riječi, gdje je $n \in N$ neka fiksna konstanta. Pogrešno odabran $n$ može pogoršati uspješnost klasifikacije, također intuitivno se može naslutiti kako nije svejedno koliko od tih $n$ riječi se pojavljuje u tekstu s lijeve strane višeznačne riječi, a koliko pak s desne strane.
 Upravo ovaj rad nastoji ustanoviti te zavisnosti, te zajedno s priloženim rezultatima provedenih eksperimenata iznosi zaključke kako odabrati kvalitetne značajke.
 
+\section{Srodni radovi}
+Čitajući dostupne radove privukle su nas metode koje
+pokušavaju pristupiti tom problemu nama poznatim metodama,
+konkretnije pomoću naivnog Bayesovog klasifikatora i SVM-a.
+Pristup pomoću stroja sa potpornim vektorima pokazao se dosta
+uspješan, ispravno klasificirajući značenje riječi
+u skoro 80\% slučajeva, ali kako je opisano u \citep{lee-etc}, da bi se takav
+rezultat postigao
+potrebno je imati dodatne informacije
+o gramatičkim svojstvima teksta. Drugi pristup
+pomoću SVM-a je korištenje značenja  riječi
+iz leksičke baze WordNet \citep{buscaldi-etc} te usporedba riječi koje opisuju
+značenje višeznačne riječi u rječniku sa riječima
+iz konteksta u kojem se ta riječ pojavljuje. Nažalost takav pristup
+nije se pokazao posebno uspješnim.
+Prema radu \citep{pedersen}, naivni Bayesov klasifikator
+pokazao se vrlo robusnim rješenjem za ovaj problem.
+Njegova ideja temelji se na izradi više klasifikatora s različitim
+širinama lijevog i desnog konteksta,
+koji bi se koristili za klasifikaciju po sistemu nadglašavanja.
+Točnost klasifikacije ovakvog pristupa vrlo je bliska veličini od 80\%.
+Zbog toga smo se mi odlučili za takav pristup, kojeg karakterizira
+relativna jednostavnost i vrlo intuitivno oblikovanje zadanog problema
+pomoću naivnog Bayesovog klasifikatora.
+
 \section{Opis uzoraka}
 Označavanje vlastite baze podataka s višeznačnim riječima izuzetno je
 skup proces. Naime za relevantnu klasifikaciju potrebno je barem
@@ -121,8 +146,8 @@ i $r$ riječi koji se nalaze desno od višeznačne riječi (desni prozor konteks
 interpunkcijski i pravopisni znakovi ignoriraju. Sve riječi koje su uključene u prozor konteksta ostavljene su originalnoj leksičkoj formi, tj.~nisu normalizirane, osim što su sva velika
 slova pretvorena u mala slova. 
 Ova metoda reprezentiranja skupa značajki,
-opisana u \citep{pedersen}, varijanta je metode \glqq vreća riječi" \engl{bag-of-words} koja je
-prvi put opisana u \citep{gale-etc}, a razlikuje se po tome što razlikuje 
+opisana u \citep{pedersen}, varijanta je metode \glqq vreća riječi" \engl{bag-of-words} 
+prvi put opisane u \citep{gale-etc}, a razlikuje se po tome što razlikuje 
 riječi koje se nalazi lijevo i desno od višeznačne riječi. \mbox{Slika \ref{window_of_context}}
 opisuje izlučivanje značajki s definiranim prozorom konteksta $(5,3)$.
 
@@ -254,21 +279,62 @@ više značajki, što je i očekivano. Naime veći prozor konteksta pohvatati ć
 različitih riječi pa će samim time i ukupan broj značajki biti veći.
 
 \section{Provođenje eksperimenata}
+\subsection{Ansambl naivnih Bayesovih klasfikatora (ANBK)}
+ANBK funkcionira po principu nadglasavanja, u našem radu ANBK sadrži devet NB klasifikatora.
+Predočavanjem uzorka, svaki klasifikator glasa za jedno značenje višeznačne riječi, 
+ovisno o \glqq maximum a posteriori" (MAP) vjerojatnosti. Uzorak se 
+zatim klasificira u ono semantičko značenje (razred) koje ima najviše glasova.
+
+Odluka koji će NB klasifikatori ući u ANBK donosi se ovisno o rezultatima pojedinačnih
+NB klasifikatora na skupu za validaciju.
+Za svaki prozor konteksta odgovoran je jedan
+NB klasifikator, što čini ukupno 81 NB klasifikator. 
+Nakon provedene validacije odabire se najuspješniji NB klasifikatora
+iz svake kategorije, koji zatim ulazi u ANBK. 
+Razlikujemo devet kategorija ovisno u veličini prozora konteksta.
+Varijable $l$ ili $r$ mogu poprimiti vrijednosti iz raspona \{0, 1, 2, 3, 4, 5, 10, 25, 50\},
+pri čemu se razlikuje uski raspon \{0, 1, 2\}, srednji \{3, 4, 5\} i široki \{10, 25, 50\}.
+Svaka kombinacija navedenih raspona čini jednu kategoriju. Primjerice
+NB klasifikator s prozorom konteksta $(2,3)$ pripada kategoriji \emph{(uski, srednji)}.
+
+Nakon što se iz svake kategorije odabere NB klasifikator koji ima najveću točnost,
+pristupa se postupku testiranja ansambla na skupu za testiranje.
+
+\subsection{Stroj s potpornim vektorima (SVM)}
+U ovom radu koristi se LibSVM implementacija \mbox{SVM-a}, odnosno C-SVM s linearnom
+jezgrenom funkcijom. 
+\mbox{C-SVM} je SVM s mekim marginama i ima jedan parametar (stupanj koštanja C).
+Takav SVM omogućuje provlačenje hiperravnine čak i ako problem
+nije linearno odvojiv, u takvim slučajevima parametar C određuje koliko će
+se kaznati svaki uzorak koji se nalazi s pogrešne strane hiperravnine.
+
+Vrijednost parametra $C$ određuje se validacijom, baš kao
+i veličina prozora konteksta.
+Postupkom \emph{pretraživanja mreže} \engl{grid search} pronalazi se
+optimalna veličina prozora konteksta (raspon mogućih veličina prozora konteksta
+isti je kao i za ANBK). Za svaku veličinu prozora konteksta računa se
+optimalna vrijednost parametra $C$ i to postupkom \emph{pretraživanja uzorka} \engl{pattern search},
+gdje je početna vrijednost $C = 2.5$, a početni korak $2$ (korak se prepolovljava sve dok nije manji od $0.1$).
+
+Testiranje se zatim
+provodi na SVM-u s onim parametrima ($C$, veličina prozora konteksta)
+koji na skupu za validaciju imaju najmanju pogrešku klasifikacije.
+
+\subsection{Validacija i testiranje}
 Validacija i testiranje modela provedeno je unakrsnom provjerom.
 Poredak uzoraka u skupu uzoraka nasumično je ispremiješan prije
 unakrsne provjere.
 Skup uzoraka zatim je podijeljen na pet podskupova, četiri podskupa
-služe za učenje modela, dok se posljednji podskup podijeli popola
+služe za učenje modela, dok se posljednji podskup dijeli popola
 na još dva podskupa, od kojih jedan služi za validaciju, a drugi za testiranje.
 Prije podijele popola, podskup je nasumično ispremiješan, s
 namjerom sprječavanja nepravilne distribucije uzoraka u skupu za validaciju
-ili skupu za testiranje. Nakon podijele petog podskupa na još dva skupa,
-vrši se validacija na dobivenom skupu za validaciju, dok se sa skupom za testiranje ne
-radi ništa. Nakon završene validacije
+ili skupu za testiranje. Validacija se vrši na dobivenom skupu za validaciju, 
+dok skup za testiranje ostaje neaktivan. Nakon završene validacije
 slijedi slijedeća iteracija unakrsne provjere, tj. podskup za validaciju
 i testiranje ubacuje se u podskupove za učenje, a jedan od 4 prijašnja podskupa
 za učenje postaje skup za validaciju i testiranje. Takvih iterativnih koraka ima ukupno
-pet. Valja naglasiti kako se testiranje ne provodi odmah nakon validaciju u svakom
+pet. Valja naglasiti kako se testiranje ne provodi odmah nakon validacije u svakom
 iterativnom koraku unakrsne provjere, već se testiranja provodi nakon što je validacija
 provedena nad svakim od pet mogućih skupova za validaciju, nakon čega se izračunavaju
 optimalni parametri modela, te se tek nakon toga vrši testiranje. 
@@ -324,7 +390,7 @@ Nakon provedenog testiranja F1 mjera ansambl naivnih Bayesovih klasifikatora
 iznosi
 \begin{equation}
 \label{eq:F1_ansambl}
-F1_{AMBK(interest)} = 0.7.
+F1_{ANBK(interest)} = 0.7.
 \end{equation}
 Valja primijetiti kako u ovom
 slučaju ansambl od devet naivnih klasifikatora ima manju točnost klasifikacije
@@ -400,12 +466,12 @@ je biblioteka sustava Weka).
 
 \subsubsection{Rezultati za riječ \emph{line}} 
 Rezultati validacije mogu se vidjeti u tablici \ref{tab:line_validation_bayes}.
-AMBK je sastavljen od Bayesovih klasifikatora s prozorom konteksta: $(2,2)$,
+ANBK je sastavljen od Bayesovih klasifikatora s prozorom konteksta: $(2,2)$,
 $(5,2)$, $(10,1)$, $(1,4)$, $(5,4)$, $(10,4)$, $(2,10)$, $(5,10)$ i $(10,10)$.
-F1 mjera AMBK-a u ovom slučaju iznosi
+F1 mjera ANBK-a u ovom slučaju iznosi
 \begin{equation}
 \label{eq:F1_ansambl_line}
-F1_{AMBK(line)} = 0.91,
+F1_{ANBK(line)} = 0.91,
 \end{equation}
 što se može smatrati izuzetno uspješnom klasifikacijom. 
 Također valja primijetiti kako u ovom slučaju ANBK ima veću točnost
@@ -504,7 +570,7 @@ a F1 mjera iznosi
 F1_{SVM(interest)} = 0.88
 \end{equation}
 
-Ako se ovaj rezultat usporedi s AMBK-om, vidljivo je kako je SVM klasifikator za riječ \emph{interest} podosta uspješniji od AMBK.
+Ako se ovaj rezultat usporedi s ANBK-om, vidljivo je kako je SVM klasifikator za riječ \emph{interest} podosta uspješniji od ANBK.
 Također ako se pomnije promotri tablica \ref{tab:interest_validation_svm}, vidljivo je kako se dobre veličine
 prozora konteksta nalaze oko veličine $(5,4)$, 
 kako se udaljavamo od te veličine u bilo kojem smjeru, pogreška klasifikacija raste.
@@ -568,13 +634,13 @@ $L_1$ & $L_2$ & $L_3$ &  \\
 \end{table}
 
 Valja primijetiti kako su F1 mjere za riječ \emph{interest} (\ref{eq:f1_svm_interest}) i \emph{line} 
-(\ref{eq:f1_svm_line}) slične, ne postoji velika razlika kao u slučaju AMBK-a.
+(\ref{eq:f1_svm_line}) slične, ne postoji velika razlika kao u slučaju ANBK-a.
 Dakle SVM bi bio bolji izbor za razrješavanje vižeznačnosti riječi jer
 nije toliko osjetljiv na neuravnotežene i uravnotežene skupove uzoraka
-kao što je AMBK.
+kao što je ANBK.
 Također zamjećuje se manja uspješnost SVM-a na uravnoteženom
 skupu uzoraka (\emph{line}) u odnosu na neuravnoteženi (\emph{interest}), 
-dok je kod AMBK-a obrnuti slučaj.
+dok je kod ANBK-a obrnuti slučaj.
 
 \section{Zaključak}
 Rad rješava problem razrješavanja višeznačnih riječi na postupcima
