@@ -1,41 +1,26 @@
 \begin{thebibliography}{}
 
-\bibitem[\protect\citename{Butcher}1981]{butcher-81}
-Judith Butcher.
-\newblock 1981.
-\newblock {\em Copy-editing}.
-\newblock Cambridge University Press, 2nd edition.
-
-\bibitem[\protect\citename{Chave}1964]{chave-64}
-K.~E. Chave.
-\newblock 1964.
-\newblock Skeletal durability and preservation.
-\newblock In J.~Imbrie and N.~Newel, editors, {\em Approaches to paleoecology},
-  pages 377--87, New York. Wiley.
-
-\bibitem[\protect\citename{Chomsky}1973]{chomsky-73}
-N.~Chomsky.
-\newblock 1973.
-\newblock Conditions on transformations.
-\newblock In S.~R. Anderson and P.~Kiparsky, editors, {\em A festschrift for
-  {Morris Halle}}, New York. Holt, Rinehart \& Winston.
-
-\bibitem[\protect\citename{Croft}1978]{croft-78}
-W.~B. Croft.
-\newblock 1978.
-\newblock {\em Organizing and searching large files of document descriptions}.
-\newblock {Ph.D.} thesis, Cambridge University.
-
-\bibitem[\protect\citename{Feigl}1958]{feigl-58}
-F.~Feigl, 1958.
-\newblock {\em Spot Tests in Organic Analysis}, chapter~6.
-\newblock Publisher publisher, 5th edition.
+\bibitem[\protect\citename{Buscaldi \bgroup et al.\egroup }2006]{buscaldi-etc}
+D.~Buscaldi, P.~Rosso, F.~Pla, E.~Segarra, and E.~Sanchis Arnal.
+\newblock 2006.
+\newblock Verb sense disambiguation using support vector machines: Impact of
+  wordnet-extracted features.
+\newblock {\em Int. Conf. on Comput. Linguistics and Intelligent Text
+  Processing}.
 
 \bibitem[\protect\citename{Gale \bgroup et al.\egroup }1992]{gale-etc}
 W.~Gale, K.~Church, and D.~Yarowsky.
 \newblock 1992.
 \newblock A method for disambiguating word senses in a large corpus.
 \newblock {\em Computers and the Humanities}.
+
+\bibitem[\protect\citename{Lee \bgroup et al.\egroup }2004]{lee-etc}
+Y.~K. Lee, H.T. Ng, and T.K. Chia.
+\newblock 2004.
+\newblock Disambiguation with support vector machines and multiple knowledge
+  sources.
+\newblock {\em Third International Workshop on the Evaluation of Systems for
+  the Semantic Analysis of Text}.
 
 \bibitem[\protect\citename{Pedersen}2000]{pedersen}
 T.~Pedersen.
