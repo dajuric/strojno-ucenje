@@ -15,7 +15,7 @@
 \usepackage{listings,color}
 \usepackage{caption}
 
-\renewcommand{\lstlistingname}{Program}
+\renewcommand{\lstlistingname}{Pseudok\^od}
 
  \lstset{
  		 language = C,	 
@@ -66,7 +66,7 @@ skupovima. Nenormalizirane riječi teksta (u orginalnom leksičkom obliku) koris
 kao značajke. Rezultati pokazuju kako SVM ima visoku uspješnost točne klasfikacije, dok
 ANBK ima lošu uspješnost na neuravnoteženom skupu. U radu se provodi postupak
 pronalaska dobrih značajki za klasifikaciju, tj.~nastoji se
-ustanoviti koliko riječi, koje se nalaze u neposrednoj blizini višeznačne riječi u samom tekstu,
+ustanoviti koliko riječi, koje se nalaze u neposrednoj blizini višeznačne riječi u tekstu,
 uzimati prilikom gradnje klasifikatora i klasifikacije. 
 Rezultati pokazuju kako se izlučivanjem 15-ak riječi oko višeznačne riječi postiže
 dobra točnost klasifikacije.}
@@ -104,7 +104,7 @@ Upravo ovaj rad nastoji ustanoviti te zavisnosti, te zajedno s priloženim rezul
 
 U idućem poglavlju dan je pregled srodnih radova. Treće poglavlje opisuje bazu
 podataka, ekstrahiranje značajki te reprezentiranje uzoraka. Četvrto pogljavlje
-daje uvid u provođenja eksperimenta, s kratkim opisom korištenih postupaka
+daje uvid u provođenje eksperimenta, s kratkim opisom korištenih postupaka
 strojnog učenja zajedno s objašnjenjem postupka provođenja validacije i testiranja. U petom
 poglavlju izneseni su rezultati eksperimenata te se raspravlja o dobivenim rezultatima.
 U zadnjem poglavlju izneseni su zaključci i smjernice za daljnji rad.
@@ -130,7 +130,7 @@ Njegova ideja temelji se na izradi više klasifikatora s različitim
 koji bi se koristili za klasifikaciju po sistemu nadglašavanja.
 Točnost klasifikacije ovakvog pristupa vrlo je bliska postotku od 80\%.
 
-\section{Opis uzoraka}
+\section{Opis podataka, uzoraka i značajki}
 Označavanje vlastite baze podataka s višeznačnim riječima izuzetno je
 skup proces. Naime za relevantnu klasifikaciju potrebno je barem
 oko tisuću uzoraka za jednu višeznačnu riječ, pri tom
@@ -142,24 +142,6 @@ značenjima za engleske riječi \emph{interest} i \emph{line}. Shodno tome u ovo
 postupci razrješavanja višeznačnosti engleskih riječi \emph{interest} i \emph{line}.
 Tekstovi u bazi podataka su na engleskom jeziku
 i prikupljeni su iz \emph{ACL/DCI Wall Street Journal} novina.
-
-Kao značajke uzorka uzimaju se riječi koje se nalaze unutar prozora konteksta promatranog uzorka.
-Prozor konteksta $(l,r)$ \engl{window of context} sastoji se
-od $l$ riječi koji se nalaze lijevo od višeznačne riječi (lijevi prozor konteksta) 
-i $r$ riječi koji se nalaze desno od višeznačne riječi (desni prozor konteksta), pri čemu se
-interpunkcijski i pravopisni znakovi ignoriraju. Sve riječi koje su uključene u prozor konteksta ostavljene su originalnoj leksičkoj formi, tj.~nisu normalizirane, osim što su sva velika
-slova pretvorena u mala slova. 
-Ova metoda reprezentiranja skupa značajki,
-opisana u \citep{pedersen}, varijanta je metode \grqq vreća riječi" \engl{bag-of-words} 
-prvi put opisane u \citep{gale-etc}, a razlikuje se po tome što razlikuje 
-riječi koje se nalazi lijevo i desno od višeznačne riječi. \mbox{Slika \ref{window_of_context}}
-opisuje izlučivanje značajki s definiranim prozorom konteksta $(5,3)$. Naime sve značajke (riječi)
-unutar prozora konteksta $(5,3)$ imat će vrijednost jedan, dok će ostale poprimiti vrijednost nula.
-
-\begin{figure}[!hbtp]
-{\small \texttt{     Forward supplies can largely be stored in these same areas, and land forces are best held in reserve on \fbox{our own soil. Drawing a} \emph{line} \fbox{between military aid} and military involvement may be harder, but it can be done if we keep the distinction clearly in mind.}}
-\caption{Primjer uzorka višeznačne riječi \emph{line} s prozorom konteksta $(5, 3)$.\label{window_of_context}}
-\end{figure}
 
 Baza podataka sadrži 2368 primjera za riječ \emph{interest} i 4148 primjera za riječ \emph{line},
 gdje je svaki primjer zapravo tekst u kojem se nalazi višeznačna riječ. Taj tekst smatramo
@@ -188,9 +170,8 @@ stoga je stvoren umjetno uravnotežen skup primjera za riječ \emph{line} kako
 bi mogli istražiti koliko koja metoda strojnog učenja
 kvalitetno klasificira na neuravnoteženom skupu podataka, 
 a koliko na uravnoteženom skupu podataka.
-
 \begin{table}[!hbtp]
-\caption{Distribucija primjera po semantičkim značenjima za riječ \emph{interest}}
+\caption{Distribucija primjera po semantičkim značenjima za riječ \emph{interest}.}
 \label{tab:interest_distribution}
 \begin{center}
 \begin{tabular}{lll}
@@ -207,9 +188,8 @@ $I_6$ & kamate 											& 1252\\
 \end{tabular}
 \end{center}
 \end{table}
-
 \begin{table}[!hbtp]
-\caption{Distribucija primjera po semantičkim značenjima za riječ \emph{line}}
+\caption{Distribucija primjera po semantičkim značenjima za riječ \emph{line}.}
 \label{tab:line_distribution}
 \begin{center}
 \begin{tabular}{lll}
@@ -224,8 +204,28 @@ $L_3$ & formacija ljudi ili stvari					& 349\\
 \end{center}
 \end{table}
 
+\subsection{Izlučivanje značajki}
+Kao značajke uzorka uzimaju se riječi koje se nalaze unutar prozora konteksta promatranog uzorka.
+Prozor konteksta $(l,r)$ \engl{window of context} sastoji se
+od $l$ riječi koji se nalaze lijevo od višeznačne riječi (lijevi prozor konteksta) 
+i $r$ riječi koji se nalaze desno od višeznačne riječi (desni prozor konteksta), pri čemu se
+interpunkcijski i pravopisni znakovi ignoriraju. Sve riječi koje su uključene u prozor konteksta ostavljene su originalnoj leksičkoj formi, tj.~nisu normalizirane, osim što su sva velika
+slova pretvorena u mala slova. 
+Ova metoda reprezentiranja skupa značajki,
+opisana u \citep{pedersen}, varijanta je metode \grqq vreća riječi" \engl{bag-of-words} 
+prvi put opisane u \citep{gale-etc}, a razlikuje se po tome što razlikuje 
+riječi koje se nalazi lijevo i desno od višeznačne riječi. \mbox{Slika \ref{window_of_context}}
+opisuje izlučivanje značajki s definiranim prozorom konteksta $(5,3)$. Primjenom
+takvog prozora na svaki primjer iz baze podataka dobiva se skup značajki. Prilikom
+klasifikacije primjera sve značajke (riječi) unutar prozora konteksta $(5,3)$ imat će vrijednost jedan, dok će preostale značajke iz skupa značajki poprimiti vrijednost nula.
+
+\begin{figure}[!hbtp]
+{\small \texttt{     Land forces are best held in reserve on \fbox{our own soil. Drawing a} \emph{line} \fbox{between military aid} and military involvement may be harder, but it can be done.}}
+\caption{Primjer uzorka višeznačne riječi \emph{line} s prozorom konteksta $(5, 3)$.\label{window_of_context}}
+\end{figure}
+
 \begin{table*}[!hbtp]
-\caption{Broj značajki za riječ \emph{interest} ovisno o veličini prozora konteksta $(l,r)$}
+\caption{Broj značajki za riječ \emph{interest} ovisno o veličini prozora konteksta $(l,r)$.}
 \label{tab:interest_feature_set}
 \begin{center}
 \begin{tabular}{|c|ccccccccc|}
@@ -247,7 +247,7 @@ $l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
 \end{table*}
 
 \begin{table*}[!hbtp]
-\caption{Broj značajki za riječ \emph{line} ovisno o veličini prozora konteksta $(l,r)$}
+\caption{Broj značajki za riječ \emph{line} ovisno o veličini prozora konteksta $(l,r)$.}
 \label{tab:line_feature_set}
 \begin{center}
 \begin{tabular}{|c|ccccccccc|}
@@ -298,12 +298,11 @@ Nakon provedene validacije odabire se najuspješniji NB klasifikatora
 iz svake kategorije, koji zatim ulazi u ANBK. Ako više NB klasifikatora iz
 iste kategorije ima jednaku F1 mjeru, tada se odabire onaj kod kojeg
 je zbroj dimnezija prozora konteksta ($l$ + $r$) manji.
-Razlikujemo devet kategorija ovisno u veličini prozora konteksta.
+Razlikujemo devet kategorija ovisno o dimenzijama prozora konteksta.
 Varijable $l$ ili $r$ mogu poprimiti vrijednosti iz raspona \{0, 1, 2, 3, 4, 5, 10, 25, 50\},
 pri čemu se razlikuje uski raspon \{0, 1, 2\}, srednji \{3, 4, 5\} i široki \{10, 25, 50\}.
 Svaka kombinacija navedenih raspona čini jednu kategoriju. Primjerice
 naivni Bayesov (NB) klasifikator s prozorom konteksta $(2,3)$ pripada kategoriji \emph{(uski, srednji)}.
-
 Nakon što se iz svake kategorije odabere NB klasifikator koji ima najveću točnost,
 pristupa se postupku testiranja ansambla na skupu za testiranje.
 
@@ -326,7 +325,7 @@ provodi na SVM-u s onim parametrima ($C$, prozor kontekst)
 koji na skupu za validaciju imaju najmanju pogrešku klasifikacije.
 
 \subsection{Validacija i testiranje}
-Validacija i testiranje modela provedeno je unakrsnom provjerom.
+Validacija i testiranje modela provodi se unakrsnom provjerom.
 Poredak uzoraka u skupu uzoraka nasumično je ispremiješan prije
 unakrsne provjere.
 Skup uzoraka zatim je podijeljen na pet podskupova, četiri podskupa
@@ -344,13 +343,12 @@ iterativnom koraku unakrsne provjere, već se testiranje provodi nakon što je v
 provedena nad svakim od pet mogućih skupova za validaciju, nakon čega se računaju
 optimalni parametri modela, te se tek nakon toga vrši testiranje. 
 
-\begin{lstlisting}[label=lst:Convolution1D,caption= Pseudok\^od implementirane unakrsne provjere]
+\begin{lstlisting}[label=lst:program,caption= Pseudok\^od implementiranog postupka validacije i testiranja unakrsnom provjerom.]
 unakrsnaProvjera(skup uzoraka, algoritam)
 {
 	lista_skupova = podijeli skup uzoraka na 5 jednakih dijelova
 	za svaki podskup i iz lista_skupova{
 		skup_za_ucenje = 4 podskupa iz lista_skupova medu kojima nije i;
-		promijesaj i;
 		podijeli i na dva dijela
 		skup_za_validaciju = prva polovica podijeljenog skupa i
 		
@@ -376,10 +374,11 @@ Testiranje se provodi baš kao i validacija, tj.~unakrsnom provjerom kroz pet ko
 ali je sada skup za validaciju neaktivan, a skup za testiranje aktivan.
 Ovakav postupak učenja, validacije i testiranja modela odabran je s razlogom, naime
 želi se iskoristi što veći skup uzoraka, i za validaciju, i za testiranje.
-Naime ako bi se testiranje vršilo odmah nakon validacije u svakom iterativnom
-koraku unakrsne provjere, prilikom testiranja dobiveni rezultati ne bi bili
+Ako bi se testiranje vršilo odmah nakon validacije u svakom iterativnom
+koraku unakrsne provjere, tada prilikom testiranja dobiveni rezultati ne bi bili
 potpuno objektivni, jer bi rezultati testiranja u tom koraku ovisili
-o parametrima izračunatim na trenutačnom skupu za validaciju. %TODO (srediti ovo obavezno)
+o parametrima izračunatim na trenutačnom skupu za validaciju. Pseudok\^od \ref{lst:program}
+jasnije objašnjava implementaciju postupka validacije i testiranja.
 
 \section{Rezultati}
 \subsection{Klasifikacija pomoću ansambla naivnih Bayesovih klasifikatora}
@@ -400,9 +399,9 @@ F1_{ANBK(interest)} = 0.7.
 Valja primijetiti kako u ovom
 slučaju ansambl od devet NB klasifikatora ima manju točnost klasifikacije
 od svakog pojedinačnog NB klasifikatora od kojih je sastavljen,
-iz čega se može zaključiti da ANBK ne mora nužno poboljšati
+iz čega se može zaključiti kako ANBK ne mora nužno poboljšati
 točnost klasifikacije. Naime u ovom slučaju bilo bi bolje, umjesto ansambla, klasificirati
-npr.~s NB klasifikatorom s definiranim prozorom konteksta (1, 1), kao
+npr.~s NB klasifikatorom s definiranim prozorom konteksta (1, 1). Kao
 što se može iščitati iz tablice \ref{tab:interest_validation_bayes}, njegova F1 mjera iznosi
 \begin{equation}
 \label{eq:F1_1_1}
@@ -413,7 +412,7 @@ dok je $F1_{(1,1)}$ izračunata na skupu za validaciju, tj.~te dvije mjere nisu
 baš usporedive jer nisu dobivene na temelju istih uzoraka.
 
 \begin{table*}[!hbtp]
-\caption{Validacijom dobivene F1 mjere NB klasifikatora s prozorom konteksta $(l,r)$ za riječ \emph{interest}}
+\caption{Validacijom dobivene F1 mjere NB klasifikatora s prozorom konteksta $(l,r)$ za riječ \emph{interest}.}
 \label{tab:interest_validation_bayes}
 \begin{center}
 \begin{tabular}{|c||ccc|ccc|ccc|}
@@ -435,7 +434,7 @@ $l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
 \end{table*}
 
 \begin{table}[!hbtp]
-\caption{Matrica zabune ANBK-a za riječ \emph{interest}}
+\caption{Matrica zabune ANBK-a za riječ \emph{interest}.}
 \label{tab:interest_confusion_bayes}
 \begin{center}
 \begin{tabular}{|cccccc|c|}
@@ -483,7 +482,7 @@ Također valja primijetiti kako u ovom slučaju ANBK ima veću točnost
 od bilo kojeg pojedinačnog NB klasifikatora, što
 se može pravdati uravnoteženošću skupa uzoraka po razredima (semantičkim značenjima).
 \begin{table*}[!hbtp]
-\caption{Validacijom dobivene F1 mjere NB klasifikatora s prozorom konteksta $(l,r)$ za riječ \emph{line}}
+\caption{Validacijom dobivene F1 mjere NB klasifikatora s prozorom konteksta $(l,r)$ za riječ \emph{line}.}
 \label{tab:line_validation_bayes}
 \begin{center}
 \begin{tabular}{|c||ccc|ccc|ccc|}
@@ -505,7 +504,7 @@ $l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
 \end{table*}
 
 \begin{table}[!hbtp]
-\caption{Matrica zabune ANBK-a za riječ \emph{line}}
+\caption{Matrica zabune ANBK-a za riječ \emph{line}.}
 \label{tab:line_confusion_bayes}
 \begin{center}
 \begin{tabular}{|ccc|c|}
@@ -522,15 +521,16 @@ $L_1$ & $L_2$ & $L_3$ &  \\
 
 \subsection{Klasifikacija pomoću SVM-a}
 \subsubsection{Rezultati za riječ \emph{interest}}
-U tablici \ref{tab:interest_validation_svm} nalaze se rezultati validacije.
-Za svaki prozor konteksta $(l,r)$ validacijom je izračunat parametar C koji
+U tablici \ref{tab:interest_validation_svm} nalaze se rezultati validacije
+za svaki prozor konteksta.
+Naime za svaki prozor konteksta $(l,r)$ validacijom je izračunat parametar C koji
 daje najmanju pogrešku na skupu za validaciju.
 Npr.~SVM s prozorom konteksta $(2,1)$ ima pogrešku klasifikacije $0.12$,
 dok parametar C iznosi $1.25$. 
 Onaj SVM kod kojeg kombinacija dimenzija prozora konteksta i parametra C daje najmanju pogrešku na skupu za validaciju, odabire se za testiranje.
 U našem slučaju, kao što se može očitati iz tablice \ref{tab:interest_validation_svm}, to je SVM s prozorom konteksta (5,4) i parametrom $C=0.75$.
 \begin{table*}[!hbtp]
-\caption{Pogreške i vrijednosti parametara C nakon provedene validacije SVM-a za riječ \emph{interest}}
+\caption{Pogreške i vrijednosti parametara C nakon provedene validacije SVM-a za riječ \emph{interest}.}
 \label{tab:interest_validation_svm}
 \begin{center}
 \begin{tabular}{|c|ccccccccc|}
@@ -551,7 +551,7 @@ $l \setminus r$ & 0 & 1 & 2 & 3 & 4 & 5 & 10 & 25 & 50 \\
 \end{center}
 \end{table*}
 \begin{table*}[!hbtp]
-\caption{Pogreške i vrijednosti parametara C nakon provedene validacije SVM-a za riječ \emph{line}}
+\caption{Pogreške i vrijednosti parametara C nakon provedene validacije SVM-a za riječ \emph{line}.}
 \label{tab:line_validation_svm}
 \begin{center}
 \begin{tabular}{|c|ccccccccc|}
@@ -579,7 +579,7 @@ F1_{SVM(interest)} = 0.88.
 \end{equation}
 
 Ako se ovaj rezultat usporedi s ANBK-om, vidljivo je kako je SVM klasifikator za riječ \emph{interest} podosta uspješniji od ANBK.
-Također ako se pomnije promotri tablica \ref{tab:interest_validation_svm}, vidljivo je kako se dobre dimenzije
+Također ako se pomnije promotri tablica \ref{tab:interest_validation_svm}, primjećuje se kako se dobre dimenzije
 prozora konteksta nalaze oko veličine $(5,4)$, 
 kako se udaljavamo od tih dimenzija u bilo kojem smjeru, pogreška klasifikacija raste.
 Upravo prozor konteksta s dimenzijama $(5, 4)$ daje najmanju pogrešku,
@@ -587,12 +587,12 @@ naime takav prozor konteksta izlučuje najbolje značajke.
 Manji prozori konteksta (manje vrijednosti varijabli $l$ i $r$) 
 ne zahvaćaju karakteristične riječi (one koje dobro diskriminiraju između različitih semantičkih značenja) u dovoljnoj mjeri.
 Veliki prozor konteksta pak zahvaća i riječi koje ne pridonose diskriminaciji
-različitih semantičkih značenja riječi, tj.~zahvaća previše šuma, pa je
+različitih semantičkih značenja riječi, tj.~zahvaća previše šuma pa je
 pogreška klasifikacije velika, što potvrđuju i rezultati iz tablice \ref{tab:interest_validation_svm}.
 
 
 \begin{table}[!hbtp]
-\caption{Matrica zabune SVM-a za riječ \emph{interest}}
+\caption{Matrica zabune SVM-a za riječ \emph{interest}.}
 \label{tab:interest_confusion_svm}
 \begin{center}
 \begin{tabular}{|cccccc|c|}
@@ -616,7 +616,7 @@ Rezultati validacije SVM-a vidljivi su u tablici \ref{tab:line_validation_svm}.
 Baš kao i za riječ \emph{interest}, nakon validacije odabire se
 SVM s onim parametrima koji daju najmanju pogrešku na skupu za validaciju.
 Upravo SVM s prozorom konteksta $(4,50)$ i parametrom $C = 0.25$ daje 
-najmanju pogrešku na skupu validacije.
+najmanju pogrešku na skupu za validaciju.
 Za takav SVM nakon testiranja na skupu za testiranje, dobivena
 je matrica zabune prikazana u tablici \ref{tab:line_confusion_svm}
 iz koje se može izračunati:
@@ -626,7 +626,7 @@ F1_{SVM(line)} = 0.84.
 \end{equation}
 
 \begin{table}[!hbtp]
-\caption{Matrica zabune SVM-a za riječ \emph{line}}
+\caption{Matrica zabune SVM-a za riječ \emph{line}.}
 \label{tab:line_confusion_svm}
 \begin{center}
 \begin{tabular}{|ccc|c|}

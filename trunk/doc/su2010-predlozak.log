@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.4.24)  19 DEC 2010 18:24
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.4.24)  19 DEC 2010 20:21
 entering extended mode
  %&-line parsing enabled.
 **su2010-predlozak.tex
@@ -516,56 +516,40 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 
 
 ]
-LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 160.
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
-[] \OT1/pcr/m/n/9 Forward supplies can largely be
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
-\OT1/pcr/m/n/9 stored in these same areas, and land
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
-\OT1/pcr/m/n/9 forces are best held in reserve
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
-\OT1/pcr/m/n/9 on [] \OT1/pcr/m/sl/9 line
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
-[] \OT1/pcr/m/n/9 and military
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
-\OT1/pcr/m/n/9 involvement may be harder, but it can be
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
-\OT1/pcr/m/n/9 done if we keep the distinction clearly in
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 193--193
+Underfull \hbox (badness 10000) in paragraph at lines 174--174
 [] \OT1/ptm/m/n/10 Tablica 1: |Dis-tribu-cija prim-jera po se-manti[]ckim
  []
 
 
-Overfull \hbox (1.05858pt too wide) in paragraph at lines 196--208
+Overfull \hbox (1.05858pt too wide) in paragraph at lines 177--189
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--212
+Underfull \hbox (badness 10000) in paragraph at lines 192--192
 [] \OT1/ptm/m/n/10 Tablica 2: |Dis-tribu-cija prim-jera po se-manti[]ckim
+ []
+
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 223.
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
+[] \OT1/pcr/m/n/9 Land forces are best held in reserve
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
+\OT1/pcr/m/n/9 on [] \OT1/pcr/m/sl/9 line
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
+[] \OT1/pcr/m/n/9 and military
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
+\OT1/pcr/m/n/9 involvement may be harder, but it can be
  []
 
 LaTeX Font Info:    Try loading font information for OMS+ptm on input line 277.
@@ -581,21 +565,15 @@ Underfull \hbox (badness 6927) in paragraph at lines 288--292
  []
 
 [2]
-Underfull \hbox (badness 4872) in paragraph at lines 311--317
+Underfull \hbox (badness 4872) in paragraph at lines 310--316
 \OT1/ptm/m/n/10 odnosno C-SVM s lin-earnom jez-grenom funkci-jom.
  []
 
-
-Underfull \vbox (badness 6396) has occurred while \output is active []
-
-
-Underfull \vbox (badness 1668) has occurred while \output is active []
-
- [3]
+[3]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 386.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 385.
 
-Underfull \hbox (badness 2080) in paragraph at lines 387--394
+Underfull \hbox (badness 2080) in paragraph at lines 386--393
 \OT1/ptm/m/n/10 naivnih Bayeso-vih klasi-fika-tora (ANBK). U tablici 5[]
  []
 
@@ -638,10 +616,10 @@ Underfull \hbox (badness 1215) in paragraph at lines 659--671
 
 (./su2010-predlozak.bbl) [6] (./su2010-predlozak.aux) ) 
 Here is how much of TeX's memory you used:
- 4502 strings out of 95086
- 58190 string characters out of 1183255
- 159916 words of memory out of 1500000
- 7588 multiletter control sequences out of 10000+50000
+ 4500 strings out of 95086
+ 58154 string characters out of 1183255
+ 159919 words of memory out of 1500000
+ 7586 multiletter control sequences out of 10000+50000
  30025 words of font info for 64 fonts, out of 1200000 for 2000
  28 hyphenation exceptions out of 8191
  35i,10n,49p,430b,1684s stack positions out of 5000i,500n,6000p,200000b,5000s
@@ -655,7 +633,7 @@ are/texmf-texlive/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-texlive
 /fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/tim
 es/utmbi8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr
 /share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on su2010-predlozak.pdf (6 pages, 131900 bytes).
+Output written on su2010-predlozak.pdf (6 pages, 132231 bytes).
 PDF statistics:
  66 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
