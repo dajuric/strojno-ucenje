@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.4.24)  18 DEC 2010 22:26
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.4.24)  19 DEC 2010 18:24
 entering extended mode
  %&-line parsing enabled.
 **su2010-predlozak.tex
@@ -487,18 +487,8 @@ File: umsb.fd 2002/01/19 v2.2g AMS font definitions
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 76.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 76.
-
-(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-LaTeX Font Info:    Try loading font information for OMS+pcr on input line 76.
-
-(/usr/share/texmf-texlive/tex/latex/psnfss/omspcr.fd
-File: omspcr.fd 
-)
-LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 76.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 76.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 76.
 
@@ -517,7 +507,11 @@ Underfull \hbox (badness 5161) in paragraph at lines 95--100
 \OT1/ptm/m/n/10 ovisno o okol-nom kon-tek-stu. Stoga su u ovom
  []
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 140.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
@@ -587,68 +581,68 @@ Underfull \hbox (badness 6927) in paragraph at lines 288--292
  []
 
 [2]
-Underfull \hbox (badness 4872) in paragraph at lines 309--315
+Underfull \hbox (badness 4872) in paragraph at lines 311--317
 \OT1/ptm/m/n/10 odnosno C-SVM s lin-earnom jez-grenom funkci-jom.
  []
 
 
-Underfull \hbox (badness 7221) in paragraph at lines 324--327
-[]\OT1/ptm/m/n/10 Testiranje se za-tim provodi na SVM-u s onim
- []
+Underfull \vbox (badness 6396) has occurred while \output is active []
 
-[3]
+
+Underfull \vbox (badness 1668) has occurred while \output is active []
+
+ [3]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 386.
 
-Underfull \hbox (badness 2894) in paragraph at lines 410--414
-\OT1/ptm/m/n/10 Dodu[]se treba uzeti u obzir da je mjera $\OML/cmm/m/it/10 F\OT
-1/cmr/m/n/10 1[]$
+Underfull \hbox (badness 2080) in paragraph at lines 387--394
+\OT1/ptm/m/n/10 naivnih Bayeso-vih klasi-fika-tora (ANBK). U tablici 5[]
  []
 
 
-Overfull \hbox (36.09607pt too wide) in paragraph at lines 533--548
+Overfull \hbox (36.09607pt too wide) in paragraph at lines 536--551
  [] 
  []
 
 
-Overfull \hbox (45.546pt too wide) in paragraph at lines 554--569
+Overfull \hbox (45.546pt too wide) in paragraph at lines 557--572
  [] 
  []
 
 [4] [5]
-Underfull \hbox (badness 1178) in paragraph at lines 641--649
+Underfull \hbox (badness 1178) in paragraph at lines 644--652
 []\OT1/ptm/m/n/10 Valja prim-i-jetiti kako su F1 mjere za rije[]c \OT1/ptm/m/it
 /10 in-ter-est
  []
 
 
-Underfull \hbox (badness 1303) in paragraph at lines 641--649
+Underfull \hbox (badness 1303) in paragraph at lines 644--652
 \OT1/ptm/m/n/10 (4[]) i \OT1/ptm/m/it/10 line \OT1/ptm/m/n/10 (5[]) sli[]cne, n
 e pos-toji ve-lika ra-z-lika kao u
  []
 
 
-Underfull \hbox (badness 1194) in paragraph at lines 641--649
+Underfull \hbox (badness 1194) in paragraph at lines 644--652
 \OT1/ptm/m/n/10 slu[]caju ANBK-a. Dakle SVM bi bio bolji iz-bor za
  []
 
 
-Underfull \hbox (badness 2689) in paragraph at lines 656--668
+Underfull \hbox (badness 2689) in paragraph at lines 659--671
 []\OT1/ptm/m/n/10 Za ovakav nenor-mal-iziran skup po-dataka, rezul-tati
  []
 
 
-Underfull \hbox (badness 1215) in paragraph at lines 656--668
+Underfull \hbox (badness 1215) in paragraph at lines 659--671
 \OT1/ptm/m/n/10 su pokazali kako povezi-vanje vi[]se NB klasi-fika-tora u
  []
 
 (./su2010-predlozak.bbl) [6] (./su2010-predlozak.aux) ) 
 Here is how much of TeX's memory you used:
- 4519 strings out of 95086
- 58446 string characters out of 1183255
- 152916 words of memory out of 1500000
- 7602 multiletter control sequences out of 10000+50000
- 28911 words of font info for 64 fonts, out of 1200000 for 2000
+ 4502 strings out of 95086
+ 58190 string characters out of 1183255
+ 159916 words of memory out of 1500000
+ 7588 multiletter control sequences out of 10000+50000
+ 30025 words of font info for 64 fonts, out of 1200000 for 2000
  28 hyphenation exceptions out of 8191
  35i,10n,49p,430b,1684s stack positions out of 5000i,500n,6000p,200000b,5000s
 {/usr/share/texmf-texliv
@@ -661,7 +655,7 @@ are/texmf-texlive/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-texlive
 /fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/tim
 es/utmbi8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr
 /share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on su2010-predlozak.pdf (6 pages, 131458 bytes).
+Output written on su2010-predlozak.pdf (6 pages, 131900 bytes).
 PDF statistics:
  66 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
