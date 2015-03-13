@@ -1,0 +1,1 @@
+Projekt se bavi određivanjem značenja višeznačnih riječi (poznato pod nazivom Word Sense Disambiguation - WSD).
